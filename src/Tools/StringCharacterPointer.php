@@ -17,7 +17,7 @@ class StringCharacterPointer
      * @param int $initialPointedCharacterIndex (default: 0)
      * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function setString(string $string, int $initialPointedCharacterIndex = 0)
+    public function setString($string, $initialPointedCharacterIndex = 0)
     {
         $upperBoundCharacterIndex = strlen($string) - 1;
         if ($initialPointedCharacterIndex < 0 || $initialPointedCharacterIndex > $upperBoundCharacterIndex) {
@@ -34,7 +34,7 @@ class StringCharacterPointer
     /**
      * @param int $pointedCharacterIndex
      */
-    private function setPointedCharacterIndex(int $pointedCharacterIndex)
+    private function setPointedCharacterIndex($pointedCharacterIndex)
     {
         $this->pointedCharacterIndex = $pointedCharacterIndex;
     }
@@ -42,7 +42,7 @@ class StringCharacterPointer
     /**
      * @param int $stepsCount (default: 1)
      */
-    public function moveForwards(int $stepsCount = 1)
+    public function moveForwards($stepsCount = 1)
     {
         $stringLength = $this->getStringLength();
 
@@ -54,7 +54,7 @@ class StringCharacterPointer
     /**
      * @return int
      */
-    private function getStringLength(): int
+    private function getStringLength()
     {
         return strlen($this->getString());
     }
@@ -62,7 +62,7 @@ class StringCharacterPointer
     /**
      * @return string
      */
-    public function getString(): string
+    public function getString()
     {
         return $this->string;
     }
@@ -78,7 +78,7 @@ class StringCharacterPointer
     /**
      * @return string
      */
-    public function getPointedCharacter(): string
+    public function getPointedCharacter()
     {
         return $this->string[$this->getPointedCharacterIndex()];
     }
@@ -86,7 +86,7 @@ class StringCharacterPointer
     /**
      * @return int
      */
-    public function getPointedCharacterIndex(): int
+    public function getPointedCharacterIndex()
     {
         return $this->pointedCharacterIndex;
     }
