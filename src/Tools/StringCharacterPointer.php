@@ -1,30 +1,33 @@
 <?php
 namespace Tools;
 
-class TextCharacterPointer
+class StringCharacterPointer
 {
     /** @const int NO_CHARACTER_POINTED */
     const NO_CHARACTER_POINTED = -1;
 
-    /** @var string $text */
-    private $text = '';
+    /** @var string $string */
+    private $string = '';
 
     /** @var int $pointedCharacterIndex */
     private $pointedCharacterIndex = self::NO_CHARACTER_POINTED;
 
     /**
-     * @param string $text
+     * @param string $string
      * @param int $initialPointedCharacterIndex (default: 0)
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function setText(string $text, int $initialPointedCharacterIndex = 0)
+    public function setString(string $string, int $initialPointedCharacterIndex = 0)
     {
-        $upperBoundCharacterIndex = strlen($text) - 1;
+        $upperBoundCharacterIndex = strlen($string) - 1;
         if ($initialPointedCharacterIndex < 0 || $initialPointedCharacterIndex > $upperBoundCharacterIndex) {
-            throw new TextCharacterIndexOutOfBoundsException($upperBoundCharacterIndex, $initialPointedCharacterIndex);
+            throw new StringCharacterIndexOutOfBoundsException(
+                $upperBoundCharacterIndex,
+                $initialPointedCharacterIndex
+            );
         }
 
-        $this->text = $text;
+        $this->string = $string;
         $this->setPointedCharacterIndex($initialPointedCharacterIndex);
     }
 
@@ -41,32 +44,32 @@ class TextCharacterPointer
      */
     public function moveForwards(int $stepsCount = 1)
     {
-        $textLength = $this->getTextLength();
+        $stringLength = $this->getStringLength();
 
         $this->setPointedCharacterIndex(
-            ($this->pointedCharacterIndex + $stepsCount % $textLength + $textLength) % $textLength
+            ($this->pointedCharacterIndex + $stepsCount % $stringLength + $stringLength) % $stringLength
         );
     }
 
     /**
      * @return int
      */
-    private function getTextLength(): int
+    private function getStringLength(): int
     {
-        return strlen($this->getText());
+        return strlen($this->getString());
     }
 
     /**
      * @return string
      */
-    public function getText(): string
+    public function getString(): string
     {
-        return $this->text;
+        return $this->string;
     }
 
     /**
      * @param int $stepsCount (default: 1)
-     */  
+     */
     public function moveBackwards($stepsCount = 1)
     {
         $this->moveForwards(-$stepsCount);
@@ -77,7 +80,7 @@ class TextCharacterPointer
      */
     public function getPointedCharacter(): string
     {
-        return $this->text[$this->getPointedCharacterIndex()];
+        return $this->string[$this->getPointedCharacterIndex()];
     }
 
     /**

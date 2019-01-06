@@ -3,14 +3,14 @@ namespace Tools;
 
 use PHPUnit\Framework\TestCase;
 
-class TextCharacterPointerTest extends TestCase
+class StringCharacterPointerTest extends TestCase
 {
-    /** @var TextCharacterPointer $textCharacterPointer */
-    private $textCharacterPointer;
+    /** @var StringCharacterPointer $stringCharacterPointer */
+    private $stringCharacterPointer;
 
     public function setUp()
     {
-        $this->textCharacterPointer = new TextCharacterPointer();
+        $this->stringCharacterPointer = new StringCharacterPointer();
     }
 
     /**
@@ -26,61 +26,63 @@ class TextCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\TextCharacterIndexOutOfBoundsException
+     * @expectedException \Tools\StringCharacterIndexOutOfBoundsException
      * @dataProvider initialPointedCharacterIndexOutOfBoundsDataProvider
-     * @param string $text
+     * @param string $string
      * @param int $initialPointedCharacterIndex
      */
-    public function testSetTextThrowsIfInitialPointedCharacterIndexBoundsExceeded($text, $initialPointedCharacterIndex)
-    {
-        $upperBoundCharacterIndex = strlen($text) - 1;
+    public function testSetStringThrowsIfInitialPointedCharacterIndexBoundsExceeded(
+        $string,
+        $initialPointedCharacterIndex
+    ) {
+        $upperBoundCharacterIndex = strlen($string) - 1;
         $this->expectExceptionMessage(
-            'The given character index is outside the text bounds ' .
+            'The given character index is outside the string bounds ' .
                 "[0, $upperBoundCharacterIndex]: $initialPointedCharacterIndex."
         );
 
-        $this->textCharacterPointer->setText($text, $initialPointedCharacterIndex);
+        $this->stringCharacterPointer->setString($string, $initialPointedCharacterIndex);
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function testSetTextSetsTheGivenText()
+    public function testSetStringSetsTheGivenString()
     {
-        $this->textCharacterPointer->setText('ABC');
+        $this->stringCharacterPointer->setString('ABC');
 
-        $this->assertEquals('ABC', $this->textCharacterPointer->getText());
+        $this->assertEquals('ABC', $this->stringCharacterPointer->getString());
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function testSetTextSetsPointedCharacterIndexToZeroIfNoInitialIndexIsGiven()
+    public function testSetStringSetsPointedCharacterIndexToZeroIfNoInitialIndexIsGiven()
     {
-        $this->textCharacterPointer->setText('ABC');
+        $this->stringCharacterPointer->setString('ABC');
 
-        $this->assertEquals(0, $this->textCharacterPointer->getPointedCharacterIndex());
+        $this->assertEquals(0, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function testSetTextSetsTheGivenInitialPointedCharacterIndex()
+    public function testSetStringSetsTheGivenInitialPointedCharacterIndex()
     {
-        $this->textCharacterPointer->setText('ABC', 2);
+        $this->stringCharacterPointer->setString('ABC', 2);
 
-        $this->assertEquals(2, $this->textCharacterPointer->getPointedCharacterIndex());
+        $this->assertEquals(2, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveForwardsSetsThePointedCharacterIndexCorrectly()
     {
-        $this->textCharacterPointer->setText('ABC');
-        $this->textCharacterPointer->moveForwards();
+        $this->stringCharacterPointer->setString('ABC');
+        $this->stringCharacterPointer->moveForwards();
 
-        $this->assertEquals(1, $this->textCharacterPointer->getPointedCharacterIndex());
+        $this->assertEquals(1, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
@@ -107,7 +109,7 @@ class TextCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      * @dataProvider moveForwardsWithMultipleStepsDataProvider
      * @param int $initialPointedCharacterIndex
      * @param int $stepsCount
@@ -118,21 +120,21 @@ class TextCharacterPointerTest extends TestCase
         $stepsCount,
         $expectedPointedCharacterIndex
     ) {
-        $this->textCharacterPointer->setText('ABC', $initialPointedCharacterIndex);
-        $this->textCharacterPointer->moveForwards($stepsCount);
+        $this->stringCharacterPointer->setString('ABC', $initialPointedCharacterIndex);
+        $this->stringCharacterPointer->moveForwards($stepsCount);
 
-        $this->assertEquals($expectedPointedCharacterIndex, $this->textCharacterPointer->getPointedCharacterIndex());
+        $this->assertEquals($expectedPointedCharacterIndex, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveBackwardsSetsThePointedCharacterIndexCorrectly()
     {
-        $this->textCharacterPointer->setText('ABC');
-        $this->textCharacterPointer->moveBackwards();
+        $this->stringCharacterPointer->setString('ABC');
+        $this->stringCharacterPointer->moveBackwards();
 
-        $this->assertEquals(2, $this->textCharacterPointer->getPointedCharacterIndex());
+        $this->assertEquals(2, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
@@ -159,7 +161,7 @@ class TextCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      * @dataProvider moveBackwardsWithMultipleStepsDataProvider
      * @param int $initialPointedCharacterIndex
      * @param int $stepsCount
@@ -170,10 +172,10 @@ class TextCharacterPointerTest extends TestCase
         $stepsCount,
         $expectedPointerCharacterIndex
     ) {
-        $this->textCharacterPointer->setText('ABC', $initialPointedCharacterIndex);
-        $this->textCharacterPointer->moveBackwards($stepsCount);
+        $this->stringCharacterPointer->setString('ABC', $initialPointedCharacterIndex);
+        $this->stringCharacterPointer->moveBackwards($stepsCount);
 
-        $this->assertEquals($expectedPointerCharacterIndex, $this->textCharacterPointer->getPointedCharacterIndex());
+        $this->assertEquals($expectedPointerCharacterIndex, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
@@ -189,7 +191,7 @@ class TextCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws TextCharacterIndexOutOfBoundsException
+     * @throws StringCharacterIndexOutOfBoundsException
      * @dataProvider pointedCharacterDataProvider
      * @param int $initialPointedCharacterIndex
      * @param string $expectedPointedCharacter
@@ -198,8 +200,8 @@ class TextCharacterPointerTest extends TestCase
         $initialPointedCharacterIndex,
         $expectedPointedCharacter
     ) {
-        $this->textCharacterPointer->setText('ABC', $initialPointedCharacterIndex);
+        $this->stringCharacterPointer->setString('ABC', $initialPointedCharacterIndex);
 
-        $this->assertEquals($expectedPointedCharacter, $this->textCharacterPointer->getPointedCharacter());
+        $this->assertEquals($expectedPointedCharacter, $this->stringCharacterPointer->getPointedCharacter());
     }
 }
