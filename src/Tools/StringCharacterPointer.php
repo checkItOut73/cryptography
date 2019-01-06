@@ -3,52 +3,45 @@ namespace Tools;
 
 class StringCharacterPointer
 {
-    /** @const int NO_CHARACTER_POINTED */
-    const NO_CHARACTER_POINTED = -1;
-
     /** @var string $string */
     private $string = '';
 
     /** @var int $pointedCharacterIndex */
-    private $pointedCharacterIndex = self::NO_CHARACTER_POINTED;
+    private $pointedCharacterIndex;
 
     /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
      * @param string $string
      * @param int $initialPointedCharacterIndex (default: 0)
-     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function setString($string, $initialPointedCharacterIndex = 0)
     {
-        $upperBoundCharacterIndex = strlen($string) - 1;
-        if ($initialPointedCharacterIndex < 0 || $initialPointedCharacterIndex > $upperBoundCharacterIndex) {
-            throw new StringCharacterIndexOutOfBoundsException(
-                $upperBoundCharacterIndex,
-                $initialPointedCharacterIndex
-            );
-        }
-
         $this->string = $string;
         $this->setPointedCharacterIndex($initialPointedCharacterIndex);
     }
 
     /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
      * @param int $pointedCharacterIndex
      */
     private function setPointedCharacterIndex($pointedCharacterIndex)
     {
+        $this->throwIfStringIsEmpty();
+        $this->throwIfCharacterIndexIsOutOfBounds($pointedCharacterIndex);
+
         $this->pointedCharacterIndex = $pointedCharacterIndex;
     }
 
     /**
-     * @param int $stepsCount (default: 1)
+     * @throws EmptyStringException
      */
-    public function moveForwards($stepsCount = 1)
+    private function throwIfStringIsEmpty()
     {
-        $stringLength = $this->getStringLength();
-
-        $this->setPointedCharacterIndex(
-            ($this->pointedCharacterIndex + $stepsCount % $stringLength + $stringLength) % $stringLength
-        );
+        if (0 === $this->getStringLength()) {
+            throw new EmptyStringException();
+        }
     }
 
     /**
@@ -68,14 +61,22 @@ class StringCharacterPointer
     }
 
     /**
-     * @param int $stepsCount (default: 1)
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @param int characterIndex
      */
-    public function moveBackwards($stepsCount = 1)
+    private function throwIfCharacterIndexIsOutOfBounds($characterIndex)
     {
-        $this->moveForwards(-$stepsCount);
+        $upperBoundCharacterIndex = $this->getStringLength() - 1;
+        if ($characterIndex < 0 || $characterIndex > $upperBoundCharacterIndex) {
+            throw new StringCharacterIndexOutOfBoundsException(
+                $upperBoundCharacterIndex,
+                $characterIndex
+            );
+        }
     }
-    
+
     /**
+     * @throws EmptyStringException
      * @return string
      */
     public function getPointedCharacter()
@@ -84,10 +85,39 @@ class StringCharacterPointer
     }
 
     /**
+     * @throws EmptyStringException
      * @return int
      */
     public function getPointedCharacterIndex()
     {
+        $this->throwIfStringIsEmpty();
+
         return $this->pointedCharacterIndex;
+    }
+
+    /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @param int $stepsCount (default: 1)
+     */
+    public function moveForwards($stepsCount = 1)
+    {
+        $this->throwIfStringIsEmpty();
+
+        $stringLength = $this->getStringLength();
+
+        $this->setPointedCharacterIndex(
+            ($this->pointedCharacterIndex + $stepsCount % $stringLength + $stringLength) % $stringLength
+        );
+    }
+
+    /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @param int $stepsCount (default: 1)
+     */
+    public function moveBackwards($stepsCount = 1)
+    {
+        $this->moveForwards(-$stepsCount);
     }
 }
