@@ -6,4 +6,7 @@ docker run \
     --env LOGGING_HOST= \
     --env LOGGING_PORT= \
     --entrypoint php \
-    php:7.1.8-apache vendor/phpunit/phpunit/phpunit tests
+    php:7.1.8-apache \
+        vendor/phpunit/phpunit/phpunit \
+        --configuration build/phpunit.xml.dist \
+        tests

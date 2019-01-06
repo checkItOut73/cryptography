@@ -8,6 +8,6 @@ docker run \
     --entrypoint php \
     php:7.1.8-apache \
         vendor/squizlabs/php_codesniffer/bin/phpcs \
-        --standard=code-sniffer-rules.xml \
+        --standard=build/code-sniffer-rules.xml \
         --extensions=php \
         .
