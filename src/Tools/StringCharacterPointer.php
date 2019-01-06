@@ -1,6 +1,9 @@
 <?php
 namespace Tools;
 
+use Tools\Exceptions\EmptyStringException;
+use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
+
 class StringCharacterPointer
 {
     /** @var string $string */

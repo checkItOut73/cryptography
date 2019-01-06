@@ -1,5 +1,5 @@
 <?php
-namespace Tools;
+namespace Tools\Exceptions;
 
 class InvalidCharacterException extends \Exception
 {
