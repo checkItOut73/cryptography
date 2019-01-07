@@ -4,6 +4,8 @@ namespace Tools;
 use PHPUnit\Framework\TestCase;
 use Tools\Exceptions\EmptyStringException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
+use Tools\Exceptions\InvalidCharacterException;
+use Tools\Exceptions\StringCharacterNotContainedException;
 
 class StringCharacterPointerTest extends TestCase
 {
@@ -261,5 +263,92 @@ class StringCharacterPointerTest extends TestCase
     public function testMoveBackwardsThrowsIfTheStringIsEmpty()
     {
         $this->stringCharacterPointer->moveBackwards();
+    }
+
+    /**
+     * @return array
+     */
+    public function moveToNextCharacterDataProvider()
+    {
+        return [
+            ['BABB', 1, 'B', 2],
+            ['BBA', 1, 'B', 0],
+            ['BA', 1, 'A', 1]
+        ];
+    }
+
+    /**
+     * @throws EmptyStringException
+     * @throws InvalidCharacterException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws StringCharacterNotContainedException
+     * @dataProvider moveToNextCharacterDataProvider
+     * @param string $string
+     * @param int $initialPointedCharacterIndex
+     * @param string $character
+     * @param int $expectedPointedCharacterIndex
+     */
+    public function testMoveToNextCharacterSetsThePointedCharacterIndexCorrectly(
+        $string,
+        $initialPointedCharacterIndex,
+        $character,
+        $expectedPointedCharacterIndex
+    ) {
+        $this->stringCharacterPointer->setString($string, $initialPointedCharacterIndex);
+        $this->stringCharacterPointer->moveToNextCharacter($character);
+
+        $this->assertEquals($expectedPointedCharacterIndex, $this->stringCharacterPointer->getPointedCharacterIndex());
+    }
+
+    /**
+     * @expectedException \Tools\Exceptions\StringCharacterNotContainedException
+     * @expectedExceptionMessage The character to go to is not contained in the string: a.
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws InvalidCharacterException
+     */
+    public function testMoveToNextCharacterThrowsIfCharacterIsNotContained()
+    {
+        $this->stringCharacterPointer->setString('ABC');
+        $this->stringCharacterPointer->moveToNextCharacter('a');
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidCharacterDataProvider()
+    {
+        return [[''], ['AB']];
+    }
+
+    /**
+     * @expectedException \Tools\Exceptions\InvalidCharacterException
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws StringCharacterNotContainedException
+     * @dataProvider invalidCharacterDataProvider
+     * @param string $invalidCharacter
+     */
+    public function testMoveToNextCharacterThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
+    {
+        $this->stringCharacterPointer->setString('ABC');
+
+        $this->expectExceptionMessage(
+            'The given argument is not a valid character: ' . $invalidCharacter. '.'
+        );
+
+        $this->stringCharacterPointer->moveToNextCharacter($invalidCharacter);
+    }
+
+    /**
+     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     * @throws InvalidCharacterException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws StringCharacterNotContainedException
+     */
+    public function testMoveToNextCharacterThrowsIfTheStringIsEmpty()
+    {
+        $this->stringCharacterPointer->moveToNextCharacter('A');
     }
 }

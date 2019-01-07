@@ -3,6 +3,8 @@ namespace Tools;
 
 use Tools\Exceptions\EmptyStringException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
+use Tools\Exceptions\InvalidCharacterException;
+use Tools\Exceptions\StringCharacterNotContainedException;
 
 class StringCharacterPointer
 {
@@ -52,7 +54,7 @@ class StringCharacterPointer
      */
     private function getStringLength()
     {
-        return strlen($this->getString());
+        return strlen($this->string);
     }
 
     /**
@@ -122,5 +124,46 @@ class StringCharacterPointer
     public function moveBackwards($stepsCount = 1)
     {
         $this->moveForwards(-$stepsCount);
+    }
+
+    /**
+     * @throws InvalidCharacterException
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws StringCharacterNotContainedException
+     * @param string $character
+     */
+    public function moveToNextCharacter($character)
+    {
+        $this->throwIfCharacterIsInvalid($character);
+        $this->throwIfStringIsEmpty();
+
+        $nextCharacterIndexAfter = strpos($this->string, $character, $this->pointedCharacterIndex + 1);
+
+        if (false !== $nextCharacterIndexAfter) {
+            $this->setPointedCharacterIndex($nextCharacterIndexAfter);
+        } else {
+            $nextCharacterIndexBefore = strpos(
+                substr($this->string, 0, $this->pointedCharacterIndex + 1),
+                $character
+            );
+
+            if (false !== $nextCharacterIndexBefore) {
+                $this->setPointedCharacterIndex($nextCharacterIndexBefore);
+            } else {
+                throw new StringCharacterNotContainedException($character);
+            }
+        }
+    }
+
+    /**
+     * @throws InvalidCharacterException
+     * @param string $character
+     */
+    private function throwIfCharacterIsInvalid($character)
+    {
+        if (1 !== strlen($character)) {
+            throw new InvalidCharacterException($character);
+        }
     }
 }
