@@ -18,6 +18,17 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testSetStringSetsTheGivenString()
+    {
+        $this->stringCharacterPointer->setString('ABC');
+
+        $this->assertEquals('ABC', $this->stringCharacterPointer->getString());
+    }
+
+    /**
      * @expectedException \Tools\Exceptions\EmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
      * @throws StringCharacterIndexOutOfBoundsException
@@ -26,6 +37,29 @@ class StringCharacterPointerTest extends TestCase
     {
         $this->stringCharacterPointer->setString('');
     }
+
+    /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testSetStringSetsPointedCharacterIndexToZeroIfNoInitialIndexIsGiven()
+    {
+        $this->stringCharacterPointer->setString('ABC');
+
+        $this->assertEquals(0, $this->stringCharacterPointer->getPointedCharacterIndex());
+    }
+
+    /**
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testSetStringSetsTheGivenInitialPointedCharacterIndex()
+    {
+        $this->stringCharacterPointer->setString('ABC', 2);
+
+        $this->assertEquals(2, $this->stringCharacterPointer->getPointedCharacterIndex());
+    }
+
 
     /**
      * @return array
@@ -56,39 +90,6 @@ class StringCharacterPointerTest extends TestCase
         );
 
         $this->stringCharacterPointer->setString($string, $initialPointedCharacterIndex);
-    }
-
-    /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
-     */
-    public function testSetStringSetsTheGivenString()
-    {
-        $this->stringCharacterPointer->setString('ABC');
-
-        $this->assertEquals('ABC', $this->stringCharacterPointer->getString());
-    }
-
-    /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
-     */
-    public function testSetStringSetsPointedCharacterIndexToZeroIfNoInitialIndexIsGiven()
-    {
-        $this->stringCharacterPointer->setString('ABC');
-
-        $this->assertEquals(0, $this->stringCharacterPointer->getPointedCharacterIndex());
-    }
-
-    /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
-     */
-    public function testSetStringSetsTheGivenInitialPointedCharacterIndex()
-    {
-        $this->stringCharacterPointer->setString('ABC', 2);
-
-        $this->assertEquals(2, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
 
     /**
