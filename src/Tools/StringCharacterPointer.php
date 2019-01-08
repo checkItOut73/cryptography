@@ -15,10 +15,10 @@ class StringCharacterPointer
     private $pointedCharacterIndex;
 
     /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
      * @param string $string
      * @param int $initialPointedCharacterIndex (default: 0)
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function setString($string, $initialPointedCharacterIndex = 0)
     {
@@ -27,9 +27,9 @@ class StringCharacterPointer
     }
 
     /**
+     * @param int $pointedCharacterIndex
      * @throws EmptyStringException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @param int $pointedCharacterIndex
      */
     private function setPointedCharacterIndex($pointedCharacterIndex)
     {
@@ -66,8 +66,8 @@ class StringCharacterPointer
     }
 
     /**
-     * @throws StringCharacterIndexOutOfBoundsException
      * @param int characterIndex
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     private function throwIfCharacterIndexIsOutOfBounds($characterIndex)
     {
@@ -81,8 +81,8 @@ class StringCharacterPointer
     }
 
     /**
-     * @throws EmptyStringException
      * @return string
+     * @throws EmptyStringException
      */
     public function getPointedCharacter()
     {
@@ -90,8 +90,8 @@ class StringCharacterPointer
     }
 
     /**
-     * @throws EmptyStringException
      * @return int
+     * @throws EmptyStringException
      */
     public function getPointedCharacterIndex()
     {
@@ -101,9 +101,9 @@ class StringCharacterPointer
     }
 
     /**
+     * @param int $stepsCount (default: 1)
      * @throws EmptyStringException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @param int $stepsCount (default: 1)
      */
     public function moveForwards($stepsCount = 1)
     {
@@ -117,9 +117,9 @@ class StringCharacterPointer
     }
 
     /**
+     * @param int $stepsCount (default: 1)
      * @throws EmptyStringException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @param int $stepsCount (default: 1)
      */
     public function moveBackwards($stepsCount = 1)
     {
@@ -127,11 +127,11 @@ class StringCharacterPointer
     }
 
     /**
+     * @param string $character
      * @throws InvalidCharacterException
      * @throws EmptyStringException
      * @throws StringCharacterIndexOutOfBoundsException
      * @throws StringCharacterNotContainedException
-     * @param string $character
      */
     public function moveToNextCharacter($character)
     {
@@ -157,8 +157,8 @@ class StringCharacterPointer
     }
 
     /**
-     * @throws InvalidCharacterException
      * @param string $character
+     * @throws InvalidCharacterException
      */
     private function throwIfCharacterIsInvalid($character)
     {

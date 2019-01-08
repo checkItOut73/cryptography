@@ -74,10 +74,10 @@ class StringCharacterPointerTest extends TestCase
 
     /**
      * @expectedException \Tools\Exceptions\StringCharacterIndexOutOfBoundsException
-     * @throws EmptyStringException
      * @dataProvider initialPointedCharacterIndexOutOfBoundsDataProvider
      * @param string $string
      * @param int $initialPointedCharacterIndex
+     * @throws EmptyStringException
      */
     public function testSetStringThrowsIfInitialPointedCharacterIndexBoundsExceeded(
         $string,
@@ -105,11 +105,11 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
      * @dataProvider pointedCharacterDataProvider
      * @param int $initialPointedCharacterIndex
      * @param string $expectedPointedCharacter
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testGetPointedCharacterReturnsTheCorrectCharacter(
         $initialPointedCharacterIndex,
@@ -174,12 +174,12 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
      * @dataProvider moveForwardsWithMultipleStepsDataProvider
      * @param int $initialPointedCharacterIndex
      * @param int $stepsCount
      * @param int $expectedPointedCharacterIndex
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveForwardsWithMultipleStepsSetsThePointedCharacterIndexCorrectly(
         $initialPointedCharacterIndex,
@@ -193,9 +193,9 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws StringCharacterIndexOutOfBoundsException
      * @expectedException \Tools\Exceptions\EmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveForwardsThrowsIfTheStringIsEmpty()
     {
@@ -238,12 +238,12 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
      * @dataProvider moveBackwardsWithMultipleStepsDataProvider
      * @param int $initialPointedCharacterIndex
      * @param int $stepsCount
      * @param int $expectedPointerCharacterIndex
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveBackwardsWithMultipleStepsSetsThePointedCharacterIndexCorrectly(
         $initialPointedCharacterIndex,
@@ -257,9 +257,9 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws StringCharacterIndexOutOfBoundsException
      * @expectedException \Tools\Exceptions\EmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveBackwardsThrowsIfTheStringIsEmpty()
     {
@@ -279,15 +279,15 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
-     * @throws InvalidCharacterException
-     * @throws StringCharacterIndexOutOfBoundsException
-     * @throws StringCharacterNotContainedException
      * @dataProvider moveToNextCharacterDataProvider
      * @param string $string
      * @param int $initialPointedCharacterIndex
      * @param string $character
      * @param int $expectedPointedCharacterIndex
+     * @throws EmptyStringException
+     * @throws InvalidCharacterException
+     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws StringCharacterNotContainedException
      */
     public function testMoveToNextCharacterSetsThePointedCharacterIndexCorrectly(
         $string,
@@ -324,11 +324,11 @@ class StringCharacterPointerTest extends TestCase
 
     /**
      * @expectedException \Tools\Exceptions\InvalidCharacterException
+     * @dataProvider invalidCharacterDataProvider
+     * @param string $invalidCharacter
      * @throws EmptyStringException
      * @throws StringCharacterIndexOutOfBoundsException
      * @throws StringCharacterNotContainedException
-     * @dataProvider invalidCharacterDataProvider
-     * @param string $invalidCharacter
      */
     public function testMoveToNextCharacterThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
     {
