@@ -8,5 +8,5 @@ docker run \
     --entrypoint php \
     php:7.1.8-apache \
         vendor/phpunit/phpunit/phpunit \
-        --configuration build/phpunit.xml.dist \
+        --configuration build/configs/phpunit.xml.dist \
         tests
