@@ -9,10 +9,10 @@ use Tools\Exceptions\StringCharacterNotContainedException;
 class StringCharacterPointer
 {
     /** @var string $string */
-    private $string = '';
+    protected $string = '';
 
     /** @var int $pointedCharacterIndex */
-    private $pointedCharacterIndex;
+    protected $pointedCharacterIndex;
 
     /**
      * @param string $string
@@ -42,7 +42,7 @@ class StringCharacterPointer
     /**
      * @throws EmptyStringException
      */
-    private function throwIfStringIsEmpty()
+    protected function throwIfStringIsEmpty()
     {
         if (0 === $this->getStringLength()) {
             throw new EmptyStringException();
@@ -58,14 +58,6 @@ class StringCharacterPointer
     }
 
     /**
-     * @return string
-     */
-    public function getString()
-    {
-        return $this->string;
-    }
-
-    /**
      * @param int characterIndex
      * @throws StringCharacterIndexOutOfBoundsException
      */
@@ -78,6 +70,14 @@ class StringCharacterPointer
                 $characterIndex
             );
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getString()
+    {
+        return $this->string;
     }
 
     /**
@@ -160,7 +160,7 @@ class StringCharacterPointer
      * @param string $character
      * @throws InvalidCharacterException
      */
-    private function throwIfCharacterIsInvalid($character)
+    protected function throwIfCharacterIsInvalid($character)
     {
         if (1 !== strlen($character)) {
             throw new InvalidCharacterException($character);

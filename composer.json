@@ -2,7 +2,8 @@
     "autoload": {
         "psr-4": {
             "": "src/",
-            "TestHelpers\\": "tests/TestHelpers/"
+            "TestHelpers\\": "tests/TestHelpers/",
+            "Tools\\Mocks\\": "tests/Tools/Mocks/"
         }
     },
     "require": {},
