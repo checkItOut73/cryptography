@@ -52,7 +52,7 @@ class StringCharacterPointer
     /**
      * @return int
      */
-    private function getStringLength()
+    protected function getStringLength()
     {
         return strlen($this->string);
     }
@@ -63,13 +63,21 @@ class StringCharacterPointer
      */
     private function throwIfCharacterIndexIsOutOfBounds($characterIndex)
     {
-        $upperBoundCharacterIndex = $this->getStringLength() - 1;
-        if ($characterIndex < 0 || $characterIndex > $upperBoundCharacterIndex) {
+        $characterIndexUpperBound = $this->getCharacterIndexUpperBound();
+        if ($characterIndex < 0 || $characterIndex > $characterIndexUpperBound) {
             throw new StringCharacterIndexOutOfBoundsException(
-                $upperBoundCharacterIndex,
+                $characterIndexUpperBound,
                 $characterIndex
             );
         }
+    }
+
+    /**
+     * @return int
+     */
+    protected function getCharacterIndexUpperBound()
+    {
+        return $this->getStringLength() - 1;
     }
 
     /**
@@ -136,15 +144,14 @@ class StringCharacterPointer
     public function moveToNextCharacter($character)
     {
         $this->throwIfCharacterIsInvalid($character);
-        $this->throwIfStringIsEmpty();
 
-        $nextCharacterIndexAfter = strpos($this->string, $character, $this->pointedCharacterIndex + 1);
+        $nextCharacterIndexAfter = strpos($this->string, $character, $this->getPointedCharacterIndex() + 1);
 
         if (false !== $nextCharacterIndexAfter) {
             $this->setPointedCharacterIndex($nextCharacterIndexAfter);
         } else {
             $nextCharacterIndexBefore = strpos(
-                substr($this->string, 0, $this->pointedCharacterIndex + 1),
+                substr($this->string, 0, $this->getPointedCharacterIndex() + 1),
                 $character
             );
 

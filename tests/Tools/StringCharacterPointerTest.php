@@ -83,10 +83,10 @@ class StringCharacterPointerTest extends TestCase
         $string,
         $initialPointedCharacterIndex
     ) {
-        $upperBoundCharacterIndex = strlen($string) - 1;
+        $characterIndexUpperBound = strlen($string) - 1;
         $this->expectExceptionMessage(
             'The given character index is outside the string bounds ' .
-                "[0, $upperBoundCharacterIndex]: $initialPointedCharacterIndex."
+                "[0, $characterIndexUpperBound]: $initialPointedCharacterIndex."
         );
 
         $this->stringCharacterPointer->setString($string, $initialPointedCharacterIndex);
