@@ -68,7 +68,7 @@ class StringCharacterPointerTest extends TestCase
     {
         return [
             ['A', -1],
-            ['A', 1]
+            ['A',  1]
         ];
     }
 
@@ -156,13 +156,13 @@ class StringCharacterPointerTest extends TestCase
     public function moveForwardsWithMultipleStepsDataProvider()
     {
         return [
-            [0, 1, 1],
-            [0, 2, 2],
-            [0, 3, 0],
-            [2, 1, 0],
-            [2, 2, 1],
-            [2, 3, 2],
-            [2, 4, 0],
+            [0,  1, 1],
+            [0,  2, 2],
+            [0,  3, 0],
+            [2,  1, 0],
+            [2,  2, 1],
+            [2,  3, 2],
+            [2,  4, 0],
             [0, -1, 2],
             [0, -2, 1],
             [0, -3, 0],
@@ -220,13 +220,13 @@ class StringCharacterPointerTest extends TestCase
     public function moveBackwardsWithMultipleStepsDataProvider()
     {
         return [
-            [0, 1, 2],
-            [0, 2, 1],
-            [0, 3, 0],
-            [0, 4, 2],
-            [2, 1, 1],
-            [2, 2, 0],
-            [2, 3, 2],
+            [0,  1, 2],
+            [0,  2, 1],
+            [0,  3, 0],
+            [0,  4, 2],
+            [2,  1, 1],
+            [2,  2, 0],
+            [2,  3, 2],
             [0, -1, 1],
             [0, -2, 2],
             [0, -3, 0],
@@ -273,8 +273,8 @@ class StringCharacterPointerTest extends TestCase
     {
         return [
             ['BABB', 1, 'B', 2],
-            ['BBA', 1, 'B', 0],
-            ['BA', 1, 'A', 1]
+            ['BBA',  1, 'B', 0],
+            ['BA',   1, 'A', 1]
         ];
     }
 

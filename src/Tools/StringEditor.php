@@ -3,7 +3,6 @@ namespace Tools;
 
 use Tools\Exceptions\InvalidCharacterException;
 use Tools\Exceptions\EmptyStringException;
-use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
 
 class StringEditor extends StringReader
 {
@@ -21,35 +20,63 @@ class StringEditor extends StringReader
 
     /**
      * @throws EmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function removePointedCharacter()
     {
-        $this->string = $this->getSubStringBeforePointer() . $this->getSubStringAfterPointer();
+        $this->removeCharacter($this->getPointedCharacterIndex());
+    }
 
-        if ($this->getPointedCharacterIndex() === $this->getCharacterIndexUpperBound() + 1) {
-            $this->moveBackwards();
+    /**
+     * @param int $characterIndex
+     */
+    private function removeCharacter($characterIndex)
+    {
+        $this->string = (
+            $this->getSubStringBeforeCharacter($characterIndex) .
+            $this->getSubStringAfterCharacter($characterIndex)
+        );
+
+        if ($this->pointedCharacterIndex > $characterIndex) {
+            $this->pointedCharacterIndex--;
+        } elseif ($this->pointedCharacterIndex === $this->getCharacterIndexUpperBound() + 1) {
+            $this->pointedCharacterIndex = 0;
         }
     }
 
     /**
+     * @param int $characterIndex
      * @return string
-     * @throws EmptyStringException
      */
-    private function getSubStringBeforePointer()
+    private function getSubStringBeforeCharacter($characterIndex)
     {
-        return substr($this->string, 0, $this->getPointedCharacterIndex());
+        return substr($this->string, 0, $characterIndex);
     }
 
     /**
+     * @param int $characterIndex
      * @return string
-     * @throws EmptyStringException
      */
-    private function getSubStringAfterPointer()
+    private function getSubStringAfterCharacter($characterIndex)
     {
-        return substr($this->string, $this->getPointedCharacterIndex() + 1);
+        return substr($this->string, $characterIndex + 1);
     }
 
-    // TODO removeFirstCharacter
-    // TODO cutPointedCharacter
+    /**
+     * @throws EmptyStringException
+     */
+    public function removeFirstCharacter()
+    {
+        $this->throwIfStringIsEmpty();
+
+        $this->removeCharacter(0);
+    }
+
+    /**
+     * @throws EmptyStringException
+     */
+    public function cutPointedCharacter()
+    {
+        $this->readPointedCharacter();
+        $this->removePointedCharacter();
+    }
 }

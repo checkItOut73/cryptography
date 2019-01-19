@@ -81,14 +81,16 @@ class StringEditorTest extends TestCase
     public function removePointedCharacterDataProvider()
     {
         return [
-            [0, 'BC', 0],
-            [1, 'AC', 1],
-            [2, 'AB', 1]
+            ['ABC', 0, 'BC', 0],
+            ['ABC', 1, 'AC', 1],
+            ['ABC', 2, 'AB', 0],
+            ['A',   0, '',   null]
         ];
     }
 
     /**
      * @dataProvider removePointedCharacterDataProvider
+     * @param string $inputString
      * @param int $pointedCharacterIndex
      * @param string $expectedEditedString
      * @param int $expectedPointedCharacterIndexAfterEditing
@@ -96,27 +98,134 @@ class StringEditorTest extends TestCase
      * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testRemovePointedCharacterRemovesTheCharacterCorrectly(
+        $inputString,
         $pointedCharacterIndex,
         $expectedEditedString,
         $expectedPointedCharacterIndexAfterEditing
     ) {
-        $this->stringEditor->setString('ABC', $pointedCharacterIndex);
+        $this->stringEditor->setString($inputString, $pointedCharacterIndex);
+
         $this->stringEditor->removePointedCharacter();
 
         $this->assertEquals($expectedEditedString, $this->stringEditor->getString());
-        $this->assertEquals(
-            $expectedPointedCharacterIndexAfterEditing,
-            $this->stringEditor->getPointedCharacterIndex()
+        if (!is_null($expectedPointedCharacterIndexAfterEditing)) {
+            $this->assertEquals(
+                $expectedPointedCharacterIndexAfterEditing,
+                $this->stringEditor->getPointedCharacterIndex()
+            );
+        }
+    }
+
+    /**
+     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     */
+    public function testRemovePointedCharacterThrowsIfTheStringIsEmpty()
+    {
+        $this->stringEditor->removePointedCharacter();
+    }
+
+    /**
+     * @return array
+     */
+    public function removeFirstCharacterDataProvider()
+    {
+        return [
+            ['ABC', 0, 'BC', 0],
+            ['ABC', 2, 'BC', 1],
+            ['A',   0, '',   null]
+        ];
+    }
+
+    /**
+     * @dataProvider removeFirstCharacterDataProvider
+     * @param string $inputString
+     * @param int $pointedCharacterIndex
+     * @param string $expectedEditedString
+     * @param int $expectedPointedCharacterIndexAfterEditing
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testRemoveFirstCharacterRemovesTheFirstCharacterOfTheString(
+        $inputString,
+        $pointedCharacterIndex,
+        $expectedEditedString,
+        $expectedPointedCharacterIndexAfterEditing
+    ) {
+        $this->stringEditor->setString($inputString, $pointedCharacterIndex);
+
+        $this->stringEditor->removeFirstCharacter();
+
+        $this->assertEquals($expectedEditedString, $this->stringEditor->getString());
+        if (!is_null($expectedPointedCharacterIndexAfterEditing)) {
+            $this->assertEquals(
+                $expectedPointedCharacterIndexAfterEditing,
+                $this->stringEditor->getPointedCharacterIndex()
+            );
+        }
+    }
+
+    /**
+     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     */
+    public function testRemoveFirstCharacterThrowsIfTheStringIsEmpty()
+    {
+        $this->stringEditor->removeFirstCharacter();
+    }
+
+    /**
+     * @return array
+     */
+    public function cutPointedCharacterDataProvider()
+    {
+        return [
+            ['ABC', 0, 'BC', 0,    'A'],
+            ['ABC', 1, 'AC', 1,    'B'],
+            ['ABC', 2, 'AB', 0,    'C'],
+            ['A',   0, '',   null, 'A']
+        ];
+    }
+
+    /**
+     * @dataProvider cutPointedCharacterDataProvider
+     * @param string $inputString
+     * @param int $pointedCharacterIndex
+     * @param string $expectedEditedString
+     * @param int $expectedPointedCharacterIndexAfterEditing
+     * @param string $expectedReadCharacter
+     * @throws EmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testCutPointedCharacterRemovesAndReadsTheCharacterCorrectly(
+        $inputString,
+        $pointedCharacterIndex,
+        $expectedEditedString,
+        $expectedPointedCharacterIndexAfterEditing,
+        $expectedReadCharacter
+    ) {
+        $this->stringEditor->setString($inputString, $pointedCharacterIndex);
+
+        $this->stringEditor->cutPointedCharacter();
+
+        $this->assertEquals($expectedEditedString, $this->stringEditor->getString());
+        if (!is_null($expectedPointedCharacterIndexAfterEditing)) {
+            $this->assertEquals(
+                $expectedPointedCharacterIndexAfterEditing,
+                $this->stringEditor->getPointedCharacterIndex()
+            );
+        }
+        $this->assertTrue(
+            $this->readStringBufferSpy->hasMethodBeenCalledWith('appendString', [$expectedReadCharacter])
         );
     }
 
     /**
      * @expectedException \Tools\Exceptions\EmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
-     * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function testRemovePointedCharacterThrowsIfTheStringIsEmpty()
+    public function testCutPointedCharacterThrowsIfTheStringIsEmpty()
     {
-        $this->stringEditor->removePointedCharacter();
+        $this->stringEditor->cutPointedCharacter();
     }
 }
