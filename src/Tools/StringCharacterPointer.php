@@ -48,6 +48,7 @@ class StringCharacterPointer
     private function throwIfCharacterIndexIsOutOfBounds($characterIndex)
     {
         $characterIndexUpperBound = $this->getCharacterIndexUpperBound();
+
         if ($characterIndex < 0 || $characterIndex > $characterIndexUpperBound) {
             throw new StringCharacterIndexOutOfBoundsException(
                 $characterIndexUpperBound,
