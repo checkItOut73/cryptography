@@ -2,9 +2,10 @@
 namespace Tools;
 
 use PHPUnit\Framework\TestCase;
-use Tools\Exceptions\EmptyStringException;
+use Tools\Exceptions\EmptyStringParameterException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
-use Tools\Exceptions\InvalidCharacterException;
+use Tools\Exceptions\InvalidCharacterParameterException;
+use Tools\Exceptions\OperationOnEmptyStringException;
 use Tools\Mocks\StringBufferSpy;
 
 class StringEditorTest extends TestCase
@@ -27,9 +28,10 @@ class StringEditorTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
-     * @throws InvalidCharacterException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      */
     public function testSetPointedCharacterSetsTheCharacterCorrectly()
     {
@@ -48,9 +50,10 @@ class StringEditorTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\InvalidCharacterException
+     * @expectedException \Tools\Exceptions\InvalidCharacterParameterException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @throws EmptyStringException
+     * @throws OperationOnEmptyStringException
      * @dataProvider invalidCharacterDataProvider
      * @param string $invalidCharacter
      */
@@ -59,16 +62,16 @@ class StringEditorTest extends TestCase
         $this->stringEditor->setString('ABC');
 
         $this->expectExceptionMessage(
-            'The given argument is not a valid character: ' . $invalidCharacter. '.'
+            'The given parameter is not a valid character: ' . $invalidCharacter. '.'
         );
 
         $this->stringEditor->setPointedCharacter($invalidCharacter);
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
-     * @throws InvalidCharacterException
+     * @throws InvalidCharacterParameterException
      */
     public function testSetPointedCharacterThrowsIfTheStringIsEmpty()
     {
@@ -94,8 +97,9 @@ class StringEditorTest extends TestCase
      * @param int $pointedCharacterIndex
      * @param string $expectedEditedString
      * @param int $expectedPointedCharacterIndexAfterEditing
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testRemovePointedCharacterRemovesTheCharacterCorrectly(
         $inputString,
@@ -117,7 +121,7 @@ class StringEditorTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
      */
     public function testRemovePointedCharacterThrowsIfTheStringIsEmpty()
@@ -143,8 +147,9 @@ class StringEditorTest extends TestCase
      * @param int $pointedCharacterIndex
      * @param string $expectedEditedString
      * @param int $expectedPointedCharacterIndexAfterEditing
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testRemoveFirstCharacterRemovesTheFirstCharacterOfTheString(
         $inputString,
@@ -166,7 +171,7 @@ class StringEditorTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
      */
     public function testRemoveFirstCharacterThrowsIfTheStringIsEmpty()
@@ -194,8 +199,9 @@ class StringEditorTest extends TestCase
      * @param string $expectedEditedString
      * @param int $expectedPointedCharacterIndexAfterEditing
      * @param string $expectedReadCharacter
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testCutPointedCharacterRemovesAndReadsTheCharacterCorrectly(
         $inputString,
@@ -221,7 +227,7 @@ class StringEditorTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
      */
     public function testCutPointedCharacterThrowsIfTheStringIsEmpty()

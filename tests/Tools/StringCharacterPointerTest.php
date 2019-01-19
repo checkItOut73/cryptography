@@ -2,10 +2,11 @@
 namespace Tools;
 
 use PHPUnit\Framework\TestCase;
-use Tools\Exceptions\EmptyStringException;
-use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
-use Tools\Exceptions\InvalidCharacterException;
+use Tools\Exceptions\EmptyStringParameterException;
 use Tools\Exceptions\StringCharacterNotContainedException;
+use Tools\Exceptions\OperationOnEmptyStringException;
+use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
+use Tools\Exceptions\InvalidCharacterParameterException;
 
 class StringCharacterPointerTest extends TestCase
 {
@@ -18,7 +19,7 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testSetStringSetsTheGivenString()
@@ -29,8 +30,8 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
-     * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     * @expectedException \Tools\Exceptions\EmptyStringParameterException
+     * @expectedExceptionMessage The string parameter must not be empty.
      * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testSetStringThrowsIfTheGivenStringIsEmpty()
@@ -39,8 +40,9 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testSetStringSetsPointedCharacterIndexToZeroIfNoInitialIndexIsGiven()
     {
@@ -50,8 +52,9 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testSetStringSetsTheGivenInitialPointedCharacterIndex()
     {
@@ -59,7 +62,6 @@ class StringCharacterPointerTest extends TestCase
 
         $this->assertEquals(2, $this->stringCharacterPointer->getPointedCharacterIndex());
     }
-
 
     /**
      * @return array
@@ -77,7 +79,7 @@ class StringCharacterPointerTest extends TestCase
      * @dataProvider initialPointedCharacterIndexOutOfBoundsDataProvider
      * @param string $string
      * @param int $initialPointedCharacterIndex
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      */
     public function testSetStringThrowsIfInitialPointedCharacterIndexBoundsExceeded(
         $string,
@@ -108,8 +110,9 @@ class StringCharacterPointerTest extends TestCase
      * @dataProvider pointedCharacterDataProvider
      * @param int $initialPointedCharacterIndex
      * @param string $expectedPointedCharacter
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testGetPointedCharacterReturnsTheCorrectCharacter(
         $initialPointedCharacterIndex,
@@ -121,7 +124,7 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
      */
     public function testGetPointedCharacterThrowsIfTheStringIsEmpty()
@@ -130,7 +133,7 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
      */
     public function testGetPointedCharacterIndexThrowsIfTheStringIsEmpty()
@@ -139,8 +142,9 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testMoveForwardsSetsThePointedCharacterIndexCorrectly()
     {
@@ -178,8 +182,9 @@ class StringCharacterPointerTest extends TestCase
      * @param int $initialPointedCharacterIndex
      * @param int $stepsCount
      * @param int $expectedPointedCharacterIndex
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testMoveForwardsWithMultipleStepsSetsThePointedCharacterIndexCorrectly(
         $initialPointedCharacterIndex,
@@ -193,9 +198,8 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
-     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveForwardsThrowsIfTheStringIsEmpty()
     {
@@ -203,8 +207,9 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testMoveBackwardsSetsThePointedCharacterIndexCorrectly()
     {
@@ -242,8 +247,9 @@ class StringCharacterPointerTest extends TestCase
      * @param int $initialPointedCharacterIndex
      * @param int $stepsCount
      * @param int $expectedPointerCharacterIndex
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testMoveBackwardsWithMultipleStepsSetsThePointedCharacterIndexCorrectly(
         $initialPointedCharacterIndex,
@@ -257,9 +263,8 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
-     * @throws StringCharacterIndexOutOfBoundsException
      */
     public function testMoveBackwardsThrowsIfTheStringIsEmpty()
     {
@@ -284,9 +289,10 @@ class StringCharacterPointerTest extends TestCase
      * @param int $initialPointedCharacterIndex
      * @param string $character
      * @param int $expectedPointedCharacterIndex
-     * @throws EmptyStringException
-     * @throws InvalidCharacterException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      * @throws StringCharacterNotContainedException
      */
     public function testMoveToNextCharacterSetsThePointedCharacterIndexCorrectly(
@@ -304,9 +310,10 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @expectedException \Tools\Exceptions\StringCharacterNotContainedException
      * @expectedExceptionMessage The character to go to is not contained in the string: a.
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @throws InvalidCharacterException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      */
     public function testMoveToNextCharacterThrowsIfCharacterIsNotContained()
     {
@@ -323,11 +330,12 @@ class StringCharacterPointerTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\InvalidCharacterException
+     * @expectedException \Tools\Exceptions\InvalidCharacterParameterException
      * @dataProvider invalidCharacterDataProvider
      * @param string $invalidCharacter
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      * @throws StringCharacterNotContainedException
      */
     public function testMoveToNextCharacterThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
@@ -335,17 +343,16 @@ class StringCharacterPointerTest extends TestCase
         $this->stringCharacterPointer->setString('ABC');
 
         $this->expectExceptionMessage(
-            'The given argument is not a valid character: ' . $invalidCharacter. '.'
+            'The given parameter is not a valid character: ' . $invalidCharacter. '.'
         );
 
         $this->stringCharacterPointer->moveToNextCharacter($invalidCharacter);
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
-     * @throws InvalidCharacterException
-     * @throws StringCharacterIndexOutOfBoundsException
+     * @throws InvalidCharacterParameterException
      * @throws StringCharacterNotContainedException
      */
     public function testMoveToNextCharacterThrowsIfTheStringIsEmpty()

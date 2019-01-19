@@ -1,8 +1,8 @@
 <?php
 namespace Tools;
 
-use Tools\Exceptions\InvalidCharacterException;
-use Tools\Exceptions\EmptyStringException;
+use Tools\Exceptions\InvalidCharacterParameterException;
+use Tools\Exceptions\OperationOnEmptyStringException;
 
 class StringReader extends StringCharacterPointer
 {
@@ -20,8 +20,8 @@ class StringReader extends StringCharacterPointer
     /**
      * @param string $character
      * @return bool
-     * @throws InvalidCharacterException
-     * @throws EmptyStringException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      */
     public function isCharacterContained($character)
     {
@@ -32,7 +32,7 @@ class StringReader extends StringCharacterPointer
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws OperationOnEmptyStringException
      */
     public function readPointedCharacter()
     {

@@ -1,15 +1,15 @@
 <?php
 namespace Tools;
 
-use Tools\Exceptions\InvalidCharacterException;
-use Tools\Exceptions\EmptyStringException;
+use Tools\Exceptions\InvalidCharacterParameterException;
+use Tools\Exceptions\OperationOnEmptyStringException;
 
 class StringEditor extends StringReader
 {
     /**
      * @param string $character
-     * @throws InvalidCharacterException
-     * @throws EmptyStringException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      */
     public function setPointedCharacter($character)
     {
@@ -19,7 +19,7 @@ class StringEditor extends StringReader
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws OperationOnEmptyStringException
      */
     public function removePointedCharacter()
     {
@@ -62,7 +62,7 @@ class StringEditor extends StringReader
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws OperationOnEmptyStringException
      */
     public function removeFirstCharacter()
     {
@@ -72,7 +72,7 @@ class StringEditor extends StringReader
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws OperationOnEmptyStringException
      */
     public function cutPointedCharacter()
     {

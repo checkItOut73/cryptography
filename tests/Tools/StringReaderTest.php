@@ -2,9 +2,10 @@
 namespace Tools;
 
 use PHPUnit\Framework\TestCase;
-use Tools\Exceptions\EmptyStringException;
+use Tools\Exceptions\EmptyStringParameterException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
-use Tools\Exceptions\InvalidCharacterException;
+use Tools\Exceptions\InvalidCharacterParameterException;
+use Tools\Exceptions\OperationOnEmptyStringException;
 use Tools\Mocks\StringBufferSpy;
 
 class StringReaderTest extends TestCase
@@ -37,9 +38,10 @@ class StringReaderTest extends TestCase
     /**
      * @dataProvider containedCharactersDataProvider
      * @param string $containedCharacter
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @throws InvalidCharacterException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      */
     public function testIsCharacterContainedReturnsTrueForCharactersThatAreContainedInTheString($containedCharacter)
     {
@@ -49,9 +51,10 @@ class StringReaderTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
-     * @throws InvalidCharacterException
+     * @throws InvalidCharacterParameterException
+     * @throws OperationOnEmptyStringException
      */
     public function testIsCharacterContainedReturnsFalseForCharactersThatAreNotContainedInTheString()
     {
@@ -69,27 +72,28 @@ class StringReaderTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\InvalidCharacterException
+     * @expectedException \Tools\Exceptions\InvalidCharacterParameterException
      * @dataProvider invalidCharacterDataProvider
      * @param string $invalidCharacter
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testIsCharacterContainedThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
     {
         $this->stringReader->setString('ABC');
 
         $this->expectExceptionMessage(
-            'The given argument is not a valid character: ' . $invalidCharacter. '.'
+            'The given parameter is not a valid character: ' . $invalidCharacter. '.'
         );
 
         $this->stringReader->isCharacterContained($invalidCharacter);
     }
 
     /**
-     * @expectedException \Tools\Exceptions\EmptyStringException
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
      * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
-     * @throws InvalidCharacterException
+     * @throws InvalidCharacterParameterException
      */
     public function testIsCharacterContainedThrowsIfTheStringIsEmpty()
     {
@@ -97,8 +101,9 @@ class StringReaderTest extends TestCase
     }
 
     /**
-     * @throws EmptyStringException
+     * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
+     * @throws OperationOnEmptyStringException
      */
     public function testReadPointedCharacterAppendsThePointedCharacterToTheStringBuffer()
     {
@@ -106,5 +111,14 @@ class StringReaderTest extends TestCase
         $this->stringReader->readPointedCharacter();
 
         $this->assertTrue($this->readStringBufferSpy->hasMethodBeenCalledWith('appendString', ['B']));
+    }
+
+    /**
+     * @expectedException \Tools\Exceptions\OperationOnEmptyStringException
+     * @expectedExceptionMessage The requested operation cannot be processed because the string is empty.
+     */
+    public function testReadPointedCharacterThrowsIfTheStringIsEmpty()
+    {
+        $this->stringReader->readPointedCharacter();
     }
 }

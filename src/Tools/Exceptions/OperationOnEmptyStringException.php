@@ -1,7 +1,7 @@
 <?php
 namespace Tools\Exceptions;
 
-class EmptyStringException extends \Exception
+class OperationOnEmptyStringException extends \Exception
 {
     public function __construct()
     {
