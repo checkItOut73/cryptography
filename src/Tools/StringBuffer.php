@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 class StringBuffer
@@ -7,9 +8,9 @@ class StringBuffer
     private $string;
 
     /**
-     * @param string $string (default: '')
+     * @param string $string
      */
-    public function __construct($string = '')
+    public function __construct(string $string = '')
     {
         $this->string = $string;
     }
@@ -17,7 +18,7 @@ class StringBuffer
     /**
      * @return string
      */
-    public function getString()
+    public function getString(): string
     {
         return $this->string;
     }
@@ -25,7 +26,7 @@ class StringBuffer
     /**
      * @param string $string
      */
-    public function appendString($string)
+    public function appendString(string $string)
     {
         $this->string .= $string;
     }

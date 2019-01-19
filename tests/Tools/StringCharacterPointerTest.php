@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 use PHPUnit\Framework\TestCase;
@@ -66,7 +67,7 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @return array
      */
-    public function initialPointedCharacterIndexOutOfBoundsDataProvider()
+    public function initialPointedCharacterIndexOutOfBoundsDataProvider(): array
     {
         return [
             ['A', -1],
@@ -82,13 +83,16 @@ class StringCharacterPointerTest extends TestCase
      * @throws EmptyStringParameterException
      */
     public function testSetStringThrowsIfInitialPointedCharacterIndexBoundsExceeded(
-        $string,
-        $initialPointedCharacterIndex
+        string $string,
+        int $initialPointedCharacterIndex
     ) {
         $characterIndexUpperBound = strlen($string) - 1;
         $this->expectExceptionMessage(
-            'The given character index is outside the string bounds ' .
-                "[0, $characterIndexUpperBound]: $initialPointedCharacterIndex."
+            sprintf(
+                'The given character index is outside the string bounds [0, %s]: %s.',
+                $characterIndexUpperBound,
+                $initialPointedCharacterIndex
+            )
         );
 
         $this->stringCharacterPointer->setString($string, $initialPointedCharacterIndex);
@@ -97,7 +101,7 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @return array
      */
-    public function pointedCharacterDataProvider()
+    public function pointedCharacterDataProvider(): array
     {
         return [
             [0, 'A'],
@@ -115,8 +119,8 @@ class StringCharacterPointerTest extends TestCase
      * @throws OperationOnEmptyStringException
      */
     public function testGetPointedCharacterReturnsTheCorrectCharacter(
-        $initialPointedCharacterIndex,
-        $expectedPointedCharacter
+        int $initialPointedCharacterIndex,
+        string $expectedPointedCharacter
     ) {
         $this->stringCharacterPointer->setString('ABC', $initialPointedCharacterIndex);
 
@@ -157,7 +161,7 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @return array
      */
-    public function moveForwardsWithMultipleStepsDataProvider()
+    public function moveForwardsWithMultipleStepsDataProvider(): array
     {
         return [
             [0,  1, 1],
@@ -187,9 +191,9 @@ class StringCharacterPointerTest extends TestCase
      * @throws OperationOnEmptyStringException
      */
     public function testMoveForwardsWithMultipleStepsSetsThePointedCharacterIndexCorrectly(
-        $initialPointedCharacterIndex,
-        $stepsCount,
-        $expectedPointedCharacterIndex
+        int $initialPointedCharacterIndex,
+        int $stepsCount,
+        int $expectedPointedCharacterIndex
     ) {
         $this->stringCharacterPointer->setString('ABC', $initialPointedCharacterIndex);
         $this->stringCharacterPointer->moveForwards($stepsCount);
@@ -222,7 +226,7 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @return array
      */
-    public function moveBackwardsWithMultipleStepsDataProvider()
+    public function moveBackwardsWithMultipleStepsDataProvider(): array
     {
         return [
             [0,  1, 2],
@@ -252,9 +256,9 @@ class StringCharacterPointerTest extends TestCase
      * @throws OperationOnEmptyStringException
      */
     public function testMoveBackwardsWithMultipleStepsSetsThePointedCharacterIndexCorrectly(
-        $initialPointedCharacterIndex,
-        $stepsCount,
-        $expectedPointerCharacterIndex
+        int $initialPointedCharacterIndex,
+        int $stepsCount,
+        int $expectedPointerCharacterIndex
     ) {
         $this->stringCharacterPointer->setString('ABC', $initialPointedCharacterIndex);
         $this->stringCharacterPointer->moveBackwards($stepsCount);
@@ -274,7 +278,7 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @return array
      */
-    public function moveToNextCharacterDataProvider()
+    public function moveToNextCharacterDataProvider(): array
     {
         return [
             ['BABB', 1, 'B', 2],
@@ -296,10 +300,10 @@ class StringCharacterPointerTest extends TestCase
      * @throws StringCharacterNotContainedException
      */
     public function testMoveToNextCharacterSetsThePointedCharacterIndexCorrectly(
-        $string,
-        $initialPointedCharacterIndex,
-        $character,
-        $expectedPointedCharacterIndex
+        string $string,
+        int $initialPointedCharacterIndex,
+        string $character,
+        int $expectedPointedCharacterIndex
     ) {
         $this->stringCharacterPointer->setString($string, $initialPointedCharacterIndex);
         $this->stringCharacterPointer->moveToNextCharacter($character);
@@ -324,7 +328,7 @@ class StringCharacterPointerTest extends TestCase
     /**
      * @return array
      */
-    public function invalidCharacterDataProvider()
+    public function invalidCharacterDataProvider(): array
     {
         return [[''], ['AB']];
     }
@@ -338,12 +342,12 @@ class StringCharacterPointerTest extends TestCase
      * @throws OperationOnEmptyStringException
      * @throws StringCharacterNotContainedException
      */
-    public function testMoveToNextCharacterThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
+    public function testMoveToNextCharacterThrowsIfTheGivenCharacterIsInvalid(string $invalidCharacter)
     {
         $this->stringCharacterPointer->setString('ABC');
 
         $this->expectExceptionMessage(
-            'The given parameter is not a valid character: ' . $invalidCharacter. '.'
+            'The given parameter is not a valid character: ' . $invalidCharacter . '.'
         );
 
         $this->stringCharacterPointer->moveToNextCharacter($invalidCharacter);

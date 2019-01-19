@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 use Tools\Exceptions\EmptyStringParameterException;
@@ -21,7 +22,7 @@ class StringCharacterPointer
      * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function setString($string, $initialPointedCharacterIndex = 0)
+    public function setString(string $string, int $initialPointedCharacterIndex = 0)
     {
         $this->throwIfStringParameterIsEmpty($string);
         $this->string = $string;
@@ -34,7 +35,7 @@ class StringCharacterPointer
      * @param string $string
      * @throws EmptyStringParameterException
      */
-    private function throwIfStringParameterIsEmpty($string)
+    private function throwIfStringParameterIsEmpty(string $string)
     {
         if (empty($string)) {
             throw new EmptyStringParameterException();
@@ -42,10 +43,10 @@ class StringCharacterPointer
     }
 
     /**
-     * @param int characterIndex
+     * @param int $characterIndex
      * @throws StringCharacterIndexOutOfBoundsException
      */
-    private function throwIfCharacterIndexIsOutOfBounds($characterIndex)
+    private function throwIfCharacterIndexIsOutOfBounds(int $characterIndex)
     {
         $characterIndexUpperBound = $this->getCharacterIndexUpperBound();
 
@@ -60,7 +61,7 @@ class StringCharacterPointer
     /**
      * @return int
      */
-    protected function getCharacterIndexUpperBound()
+    protected function getCharacterIndexUpperBound(): int
     {
         return $this->getStringLength() - 1;
     }
@@ -68,7 +69,7 @@ class StringCharacterPointer
     /**
      * @return int
      */
-    private function getStringLength()
+    private function getStringLength(): int
     {
         return strlen($this->string);
     }
@@ -76,7 +77,7 @@ class StringCharacterPointer
     /**
      * @return string
      */
-    public function getString()
+    public function getString(): string
     {
         return $this->string;
     }
@@ -85,7 +86,7 @@ class StringCharacterPointer
      * @return string
      * @throws OperationOnEmptyStringException
      */
-    public function getPointedCharacter()
+    public function getPointedCharacter(): string
     {
         return $this->string[$this->getPointedCharacterIndex()];
     }
@@ -94,7 +95,7 @@ class StringCharacterPointer
      * @return int
      * @throws OperationOnEmptyStringException
      */
-    public function getPointedCharacterIndex()
+    public function getPointedCharacterIndex(): int
     {
         $this->throwIfStringIsEmpty();
 
@@ -112,10 +113,10 @@ class StringCharacterPointer
     }
 
     /**
-     * @param int $stepsCount (default: 1)
+     * @param int $stepsCount
      * @throws OperationOnEmptyStringException
      */
-    public function moveForwards($stepsCount = 1)
+    public function moveForwards(int $stepsCount = 1)
     {
         $this->throwIfStringIsEmpty();
 
@@ -126,10 +127,10 @@ class StringCharacterPointer
     }
 
     /**
-     * @param int $stepsCount (default: 1)
+     * @param int $stepsCount
      * @throws OperationOnEmptyStringException
      */
-    public function moveBackwards($stepsCount = 1)
+    public function moveBackwards(int $stepsCount = 1)
     {
         $this->moveForwards(-$stepsCount);
     }
@@ -140,7 +141,7 @@ class StringCharacterPointer
      * @throws OperationOnEmptyStringException
      * @throws StringCharacterNotContainedException
      */
-    public function moveToNextCharacter($character)
+    public function moveToNextCharacter(string $character)
     {
         $this->throwIfCharacterIsInvalid($character);
         $this->throwIfStringIsEmpty();
@@ -167,7 +168,7 @@ class StringCharacterPointer
      * @param string $character
      * @throws InvalidCharacterParameterException
      */
-    protected function throwIfCharacterIsInvalid($character)
+    protected function throwIfCharacterIsInvalid(string $character)
     {
         if (1 !== strlen($character)) {
             throw new InvalidCharacterParameterException($character);

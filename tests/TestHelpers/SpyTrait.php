@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace TestHelpers;
 
 trait SpyTrait
@@ -17,7 +18,7 @@ trait SpyTrait
      * @param string $methodName
      * @return bool
      */
-    public function hasMethodBeenCalled($methodName)
+    public function hasMethodBeenCalled(string $methodName): bool
     {
         foreach ($this->calls as [$callMethodName]) {
             if ($callMethodName === $methodName) {
@@ -33,7 +34,7 @@ trait SpyTrait
      * @param array $parameters
      * @return bool
      */
-    public function hasMethodBeenCalledWith($methodName, $parameters)
+    public function hasMethodBeenCalledWith(string $methodName, array $parameters): bool
     {
         foreach ($this->calls as [$callMethodName, $callParameters]) {
             if ($callMethodName === $methodName && $callParameters === $parameters) {

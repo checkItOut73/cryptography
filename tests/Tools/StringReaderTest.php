@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 use PHPUnit\Framework\TestCase;
@@ -30,7 +31,7 @@ class StringReaderTest extends TestCase
     /**
      * @return array
      */
-    public function containedCharactersDataProvider()
+    public function containedCharactersDataProvider(): array
     {
         return [['A'], ['B'], ['C']];
     }
@@ -43,7 +44,7 @@ class StringReaderTest extends TestCase
      * @throws InvalidCharacterParameterException
      * @throws OperationOnEmptyStringException
      */
-    public function testIsCharacterContainedReturnsTrueForCharactersThatAreContainedInTheString($containedCharacter)
+    public function testIsCharacterContainedReturnsTrueForContainedCharacters(string $containedCharacter)
     {
         $this->stringReader->setString('ABC');
 
@@ -66,7 +67,7 @@ class StringReaderTest extends TestCase
     /**
      * @return array
      */
-    public function invalidCharacterDataProvider()
+    public function invalidCharacterDataProvider(): array
     {
         return [[''], ['AB']];
     }
@@ -79,12 +80,12 @@ class StringReaderTest extends TestCase
      * @throws StringCharacterIndexOutOfBoundsException
      * @throws OperationOnEmptyStringException
      */
-    public function testIsCharacterContainedThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
+    public function testIsCharacterContainedThrowsIfTheGivenCharacterIsInvalid(string $invalidCharacter)
     {
         $this->stringReader->setString('ABC');
 
         $this->expectExceptionMessage(
-            'The given parameter is not a valid character: ' . $invalidCharacter. '.'
+            'The given parameter is not a valid character: ' . $invalidCharacter . '.'
         );
 
         $this->stringReader->isCharacterContained($invalidCharacter);

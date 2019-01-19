@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 use PHPUnit\Framework\TestCase;
@@ -44,7 +45,7 @@ class StringEditorTest extends TestCase
     /**
      * @return array
      */
-    public function invalidCharacterDataProvider()
+    public function invalidCharacterDataProvider(): array
     {
         return [[''], ['AB']];
     }
@@ -57,12 +58,12 @@ class StringEditorTest extends TestCase
      * @dataProvider invalidCharacterDataProvider
      * @param string $invalidCharacter
      */
-    public function testSetPointedCharacterThrowsIfTheGivenCharacterIsInvalid($invalidCharacter)
+    public function testSetPointedCharacterThrowsIfTheGivenCharacterIsInvalid(string $invalidCharacter)
     {
         $this->stringEditor->setString('ABC');
 
         $this->expectExceptionMessage(
-            'The given parameter is not a valid character: ' . $invalidCharacter. '.'
+            'The given parameter is not a valid character: ' . $invalidCharacter . '.'
         );
 
         $this->stringEditor->setPointedCharacter($invalidCharacter);
@@ -81,7 +82,7 @@ class StringEditorTest extends TestCase
     /**
      * @return array
      */
-    public function removePointedCharacterDataProvider()
+    public function removePointedCharacterDataProvider(): array
     {
         return [
             ['ABC', 0, 'BC', 0],
@@ -102,16 +103,17 @@ class StringEditorTest extends TestCase
      * @throws OperationOnEmptyStringException
      */
     public function testRemovePointedCharacterRemovesTheCharacterCorrectly(
-        $inputString,
-        $pointedCharacterIndex,
-        $expectedEditedString,
-        $expectedPointedCharacterIndexAfterEditing
+        string $inputString,
+        int $pointedCharacterIndex,
+        string $expectedEditedString,
+        ?int $expectedPointedCharacterIndexAfterEditing
     ) {
         $this->stringEditor->setString($inputString, $pointedCharacterIndex);
 
         $this->stringEditor->removePointedCharacter();
 
         $this->assertEquals($expectedEditedString, $this->stringEditor->getString());
+
         if (!is_null($expectedPointedCharacterIndexAfterEditing)) {
             $this->assertEquals(
                 $expectedPointedCharacterIndexAfterEditing,
@@ -132,7 +134,7 @@ class StringEditorTest extends TestCase
     /**
      * @return array
      */
-    public function removeFirstCharacterDataProvider()
+    public function removeFirstCharacterDataProvider(): array
     {
         return [
             ['ABC', 0, 'BC', 0],
@@ -152,16 +154,17 @@ class StringEditorTest extends TestCase
      * @throws OperationOnEmptyStringException
      */
     public function testRemoveFirstCharacterRemovesTheFirstCharacterOfTheString(
-        $inputString,
-        $pointedCharacterIndex,
-        $expectedEditedString,
-        $expectedPointedCharacterIndexAfterEditing
+        string $inputString,
+        int $pointedCharacterIndex,
+        string $expectedEditedString,
+        ?int $expectedPointedCharacterIndexAfterEditing
     ) {
         $this->stringEditor->setString($inputString, $pointedCharacterIndex);
 
         $this->stringEditor->removeFirstCharacter();
 
         $this->assertEquals($expectedEditedString, $this->stringEditor->getString());
+
         if (!is_null($expectedPointedCharacterIndexAfterEditing)) {
             $this->assertEquals(
                 $expectedPointedCharacterIndexAfterEditing,
@@ -182,7 +185,7 @@ class StringEditorTest extends TestCase
     /**
      * @return array
      */
-    public function cutPointedCharacterDataProvider()
+    public function cutPointedCharacterDataProvider(): array
     {
         return [
             ['ABC', 0, 'BC', 0,    'A'],
@@ -204,23 +207,25 @@ class StringEditorTest extends TestCase
      * @throws OperationOnEmptyStringException
      */
     public function testCutPointedCharacterRemovesAndReadsTheCharacterCorrectly(
-        $inputString,
-        $pointedCharacterIndex,
-        $expectedEditedString,
-        $expectedPointedCharacterIndexAfterEditing,
-        $expectedReadCharacter
+        string $inputString,
+        int $pointedCharacterIndex,
+        string $expectedEditedString,
+        ?int $expectedPointedCharacterIndexAfterEditing,
+        string $expectedReadCharacter
     ) {
         $this->stringEditor->setString($inputString, $pointedCharacterIndex);
 
         $this->stringEditor->cutPointedCharacter();
 
         $this->assertEquals($expectedEditedString, $this->stringEditor->getString());
+
         if (!is_null($expectedPointedCharacterIndexAfterEditing)) {
             $this->assertEquals(
                 $expectedPointedCharacterIndexAfterEditing,
                 $this->stringEditor->getPointedCharacterIndex()
             );
         }
+
         $this->assertTrue(
             $this->readStringBufferSpy->hasMethodBeenCalledWith('appendString', [$expectedReadCharacter])
         );

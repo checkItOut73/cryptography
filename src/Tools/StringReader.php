@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 use Tools\Exceptions\InvalidCharacterParameterException;
@@ -12,7 +13,7 @@ class StringReader extends StringCharacterPointer
     /**
      * @param StringBuffer $readStringBuffer
      */
-    public function __construct($readStringBuffer)
+    public function __construct(StringBuffer $readStringBuffer)
     {
         $this->readStringBuffer = $readStringBuffer;
     }
@@ -23,7 +24,7 @@ class StringReader extends StringCharacterPointer
      * @throws InvalidCharacterParameterException
      * @throws OperationOnEmptyStringException
      */
-    public function isCharacterContained($character)
+    public function isCharacterContained(string $character): bool
     {
         $this->throwIfCharacterIsInvalid($character);
         $this->throwIfStringIsEmpty();

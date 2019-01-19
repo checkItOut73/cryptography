@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace TestHelpers;
 
 class TestSpy
@@ -8,7 +9,7 @@ class TestSpy
     /**
      * @return string
      */
-    public function getData()
+    public function getData(): string
     {
         return 'data';
     }

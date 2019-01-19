@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools\Mocks;
 
 use TestHelpers\SpyTrait;
@@ -15,7 +16,7 @@ class StringBufferSpy extends StringBuffer
     /**
      * @inheritdoc
      */
-    public function appendString($string)
+    public function appendString(string $string)
     {
         $this->recordCall();
     }

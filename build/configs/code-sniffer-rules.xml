@@ -3,6 +3,58 @@
     <exclude-pattern>build/*</exclude-pattern>
     <exclude-pattern>vendor/*</exclude-pattern>
     <rule ref="PSR2">
-        <exclude name="Generic.Files.LineEndings"/>
+        <exclude name="Generic.Files.LineEndings" />
+    </rule>
+    <rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml">
+        <exclude name="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses.IncorrectlyOrderedUses" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedExtends" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation" />
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification" />
+        <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine" />
+        <exclude name="Generic.WhiteSpace.DisallowSpaceIndent" />
+        <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+        <properties>
+            <property name="enableVoidTypeHint" value="false" />
+            <property name="exceptionsDirectoryName" value="Exceptions" />
+            <property name="linesCountAfterOpeningBrace" value="0" />
+            <property name="linesCountBeforeClosingBrace" value="0" />
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="0" />
+            <property name="spacingBeforeFirst" value="0" />
+        </properties>
+    </rule>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
+        <exclude name="Consistence.Exceptions.ExceptionDeclaration.NotChainable" />
+        <exclude name="PEAR.Formatting.MultiLineAssignment.EqualSignLine" />
+        <exclude name="SlevomatCodingStandard.Arrays.TrailingArrayComma.MissingTrailingComma" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix" />
+        <exclude name="SlevomatCodingStandard.Classes.TraitUseSpacing.IncorrectLinesCountBeforeFirstUse" />
+        <exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment.OneLinePropertyComment" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowEmpty.DisallowedEmpty" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison.DisallowedYodaComparison" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses.UselessParentheses" />
+        <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName" />
+        <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces.NonFullyQualified" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedUse" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified" />
+        <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostDecrementOperator" />
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification" />
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification" />
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment" />
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamName">
+        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
+        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
+        <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
+        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
+        <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint">
+        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
     </rule>
 </ruleset>

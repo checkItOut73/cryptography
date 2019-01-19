@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1);
+
 namespace Tools;
 
 use Tools\Exceptions\InvalidCharacterParameterException;
@@ -11,7 +12,7 @@ class StringEditor extends StringReader
      * @throws InvalidCharacterParameterException
      * @throws OperationOnEmptyStringException
      */
-    public function setPointedCharacter($character)
+    public function setPointedCharacter(string $character)
     {
         $this->throwIfCharacterIsInvalid($character);
 
@@ -29,7 +30,7 @@ class StringEditor extends StringReader
     /**
      * @param int $characterIndex
      */
-    private function removeCharacter($characterIndex)
+    private function removeCharacter(int $characterIndex)
     {
         $this->string = (
             $this->getSubStringBeforeCharacter($characterIndex) .
@@ -47,7 +48,7 @@ class StringEditor extends StringReader
      * @param int $characterIndex
      * @return string
      */
-    private function getSubStringBeforeCharacter($characterIndex)
+    private function getSubStringBeforeCharacter(int $characterIndex): string
     {
         return substr($this->string, 0, $characterIndex);
     }
@@ -56,7 +57,7 @@ class StringEditor extends StringReader
      * @param int $characterIndex
      * @return string
      */
-    private function getSubStringAfterCharacter($characterIndex)
+    private function getSubStringAfterCharacter(int $characterIndex): string
     {
         return substr($this->string, $characterIndex + 1);
     }
