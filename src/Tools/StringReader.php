@@ -48,7 +48,7 @@ class StringReader extends StringCharacterPointer
     /**
      * @return string
      */
-    public function getFlushedReadString()
+    public function getFlushedReadString(): string
     {
         $readString = $this->readString;
 

@@ -34,7 +34,9 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed" />
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses.UselessParentheses" />
         <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName" />
+        <exclude name="SlevomatCodingStandard.Functions.StaticClosure.ClosureNotStatic" />
         <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces.NonFullyQualified" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedImplements" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedUse" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified" />
@@ -52,6 +54,8 @@
         <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
     </rule>
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
+        <exclude-pattern>src/Observation/Action</exclude-pattern>
+        <exclude-pattern>tests/Observation/TestObserverSpy</exclude-pattern>
         <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
         <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
     </rule>

@@ -115,7 +115,7 @@ class StringCharacterPointer
     /**
      * @return bool
      */
-    public function isStringEmpty()
+    public function isStringEmpty(): bool
     {
         return empty($this->string);
     }

@@ -10,4 +10,5 @@ docker run \
         vendor/squizlabs/php_codesniffer/bin/phpcs \
         --standard=build/configs/code-sniffer-rules.xml \
         --extensions=php \
+        -s \
         .
