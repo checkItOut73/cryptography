@@ -7,20 +7,15 @@ use Tools\Exceptions\EmptyStringParameterException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
 use Tools\Exceptions\InvalidCharacterParameterException;
 use Tools\Exceptions\OperationOnEmptyStringException;
-use Tools\Mocks\StringBufferSpy;
 
 class StringEditorTest extends TestCase
 {
-    /** @var StringBufferSpy $readStringBufferSpy */
-    private $readStringBufferSpy;
-
     /** @var StringEditor $stringEditor */
     private $stringEditor;
 
     public function setUp()
     {
-        $this->readStringBufferSpy = new StringBufferSpy();
-        $this->stringEditor = new StringEditor($this->readStringBufferSpy);
+        $this->stringEditor = new StringEditor();
     }
 
     public function testStringEditorExtendsStringReader()
@@ -226,9 +221,7 @@ class StringEditorTest extends TestCase
             );
         }
 
-        $this->assertTrue(
-            $this->readStringBufferSpy->hasMethodBeenCalledWith('appendString', [$expectedReadCharacter])
-        );
+        $this->assertEquals($expectedReadCharacter, $this->stringEditor->getReadString());
     }
 
     /**

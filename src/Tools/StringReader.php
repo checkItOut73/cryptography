@@ -7,16 +7,8 @@ use Tools\Exceptions\OperationOnEmptyStringException;
 
 class StringReader extends StringCharacterPointer
 {
-    /** @var StringBuffer $readStringBuffer */
-    private $readStringBuffer;
-
-    /**
-     * @param StringBuffer $readStringBuffer
-     */
-    public function __construct(StringBuffer $readStringBuffer)
-    {
-        $this->readStringBuffer = $readStringBuffer;
-    }
+    /** @var string $readString */
+    private $readString = '';
 
     /**
      * @param string $character
@@ -37,6 +29,31 @@ class StringReader extends StringCharacterPointer
      */
     public function readPointedCharacter()
     {
-        $this->readStringBuffer->appendString($this->getPointedCharacter());
+        $this->readString .= $this->getPointedCharacter();
+    }
+
+    /**
+     * @return string
+     */
+    public function getReadString(): string
+    {
+        return $this->readString;
+    }
+
+    public function flushReadString()
+    {
+        $this->readString = '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getFlushedReadString()
+    {
+        $readString = $this->readString;
+
+        $this->flushReadString();
+
+        return $readString;
     }
 }

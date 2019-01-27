@@ -7,20 +7,15 @@ use Tools\Exceptions\EmptyStringParameterException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
 use Tools\Exceptions\InvalidCharacterParameterException;
 use Tools\Exceptions\OperationOnEmptyStringException;
-use Tools\Mocks\StringBufferSpy;
 
 class StringReaderTest extends TestCase
 {
-    /** @var StringBufferSpy $readStringBufferSpy */
-    private $readStringBufferSpy;
-
     /** @var StringReader $stringReader */
     private $stringReader;
 
     public function setUp()
     {
-        $this->readStringBufferSpy = new StringBufferSpy();
-        $this->stringReader = new StringReader($this->readStringBufferSpy);
+        $this->stringReader = new StringReader();
     }
 
     public function testStringReaderExtendsStringCharacterPointer()
@@ -106,12 +101,12 @@ class StringReaderTest extends TestCase
      * @throws StringCharacterIndexOutOfBoundsException
      * @throws OperationOnEmptyStringException
      */
-    public function testReadPointedCharacterAppendsThePointedCharacterToTheStringBuffer()
+    public function testReadPointedCharacterAppendsThePointedCharacterToTheReadString()
     {
         $this->stringReader->setString('ABC', 1);
         $this->stringReader->readPointedCharacter();
 
-        $this->assertTrue($this->readStringBufferSpy->hasMethodBeenCalledWith('appendString', ['B']));
+        $this->assertEquals('B', $this->stringReader->getReadString());
     }
 
     /**
@@ -121,5 +116,34 @@ class StringReaderTest extends TestCase
     public function testReadPointedCharacterThrowsIfTheStringIsEmpty()
     {
         $this->stringReader->readPointedCharacter();
+    }
+
+    /**
+     * @throws EmptyStringParameterException
+     * @throws OperationOnEmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testFlushReadStringEmptiesTheReadString()
+    {
+        $this->stringReader->setString('ABC');
+        $this->stringReader->readPointedCharacter();
+
+        $this->stringReader->flushReadString();
+
+        $this->assertEquals('', $this->stringReader->getReadString());
+    }
+
+    /**
+     * @throws EmptyStringParameterException
+     * @throws OperationOnEmptyStringException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testGetFlushedReadStringEmptiesAndReturnsTheReadString()
+    {
+        $this->stringReader->setString('ABC', 1);
+        $this->stringReader->readPointedCharacter();
+
+        $this->assertEquals('B', $this->stringReader->getFlushedReadString());
+        $this->assertEquals('', $this->stringReader->getReadString());
     }
 }

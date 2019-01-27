@@ -145,6 +145,22 @@ class StringCharacterPointerTest extends TestCase
         $this->stringCharacterPointer->getPointedCharacterIndex();
     }
 
+    public function testIsStringEmptyReturnsTrueIfTheStringIsEmpty()
+    {
+        $this->assertTrue($this->stringCharacterPointer->isStringEmpty());
+    }
+
+    /**
+     * @throws EmptyStringParameterException
+     * @throws StringCharacterIndexOutOfBoundsException
+     */
+    public function testIsStringEmptyReturnsFalseIfTheStringIsNotEmpty()
+    {
+        $this->stringCharacterPointer->setString('ABC');
+
+        $this->assertFalse($this->stringCharacterPointer->isStringEmpty());
+    }
+
     /**
      * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException

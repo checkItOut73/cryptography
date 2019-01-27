@@ -107,9 +107,17 @@ class StringCharacterPointer
      */
     protected function throwIfStringIsEmpty()
     {
-        if (empty($this->string)) {
+        if ($this->isStringEmpty()) {
             throw new OperationOnEmptyStringException();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStringEmpty()
+    {
+        return empty($this->string);
     }
 
     /**
