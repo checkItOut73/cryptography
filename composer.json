@@ -3,7 +3,8 @@
         "psr-4": {
             "": "src/",
             "TestHelpers\\": "tests/TestHelpers/",
-            "Tools\\Mocks\\": "tests/Tools/Mocks/"
+            "Tools\\Mocks\\": "tests/Tools/Mocks/",
+            "Observation\\": "tests/Observation/"
         }
     },
     "require": {},
