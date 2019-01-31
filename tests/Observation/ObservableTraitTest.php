@@ -6,32 +6,33 @@ use PHPUnit\Framework\TestCase;
 
 class ObservableTraitTest extends TestCase
 {
-    /** @var TestObserverSpy $observer1 */
-    private $observer1;
+    /** @var TestObservable $testObservable */
+    private $testObservable;
 
-    /** @var TestObserverSpy $observer2 */
-    private $observer2;
+    /** @var TestObserverSpy $testObserverSpy1 */
+    private $testObserverSpy1;
 
-    /** @var TestObservable $observable */
-    private $observable;
+    /** @var TestObserverSpy $testObserverSpy2 */
+    private $testObserverSpy2;
 
     public function setUp()
     {
-        $this->observer1 = new TestObserverSpy();
-        $this->observer2 = new TestObserverSpy();
+        $this->testObservable = new TestObservable();
 
-        $this->observable = new TestObservable();
-        $this->observable->addObserver($this->observer1);
-        $this->observable->addObserver($this->observer2);
+        $this->testObserverSpy1 = new TestObserverSpy();
+        $this->testObservable->addObserver($this->testObserverSpy1);
+
+        $this->testObserverSpy2 = new TestObserverSpy();
+        $this->testObservable->addObserver($this->testObserverSpy2);
     }
 
     public function testTheSubscribedObservesWillBeNotified()
     {
-        $action = new Action('SOME_ACTION_NAME', ['someActionProperty' => 'someActionValue']);
+        $action = new Action(['someActionProperty' => 'someActionValue']);
 
-        $this->observable->notifyObservers($action);
+        $this->testObservable->notifyObservers($action);
 
-        $this->assertTrue($this->observer1->hasMethodBeenCalledWith('handleAction', [$action]));
-        $this->assertTrue($this->observer2->hasMethodBeenCalledWith('handleAction', [$action]));
+        $this->assertTrue($this->testObserverSpy1->hasMethodBeenCalledWith('handleAction', [$action]));
+        $this->assertTrue($this->testObserverSpy2->hasMethodBeenCalledWith('handleAction', [$action]));
     }
 }

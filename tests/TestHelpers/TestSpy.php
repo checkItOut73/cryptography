@@ -20,11 +20,9 @@ class TestSpy
     }
 
     /**
-     * @param $parameter1
-     * @param $parameter2
-     * @param $parameter3
+     * @param array $options
      */
-    public function doSomethingSpecific($parameter1, $parameter2, $parameter3)
+    public function doSomethingSpecific(array $options)
     {
         $this->recordCall();
     }

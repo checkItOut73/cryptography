@@ -6,31 +6,30 @@ use PHPUnit\Framework\TestCase;
 
 class ActionTest extends TestCase
 {
-    public function testTheGivenNameIsSetAndAnEmptyArrayIsSetForDataAsDefault()
+    public function testAnEmptyArrayIsSetForDataAsDefault()
     {
-        $action = new Action('SOME_ACTION_NAME');
+        $action = new Action();
 
-        $this->assertEquals('SOME_ACTION_NAME', $action->getName());
         $this->assertEquals([], $action->getData());
     }
 
     public function testTheGivenDataIsSet()
     {
-        $action = new Action('SOME_ACTION_NAME', ['someActionProperty' => 'someActionValue']);
+        $action = new Action(['someActionProperty' => 'someActionValue']);
 
         $this->assertEquals(['someActionProperty' => 'someActionValue'], $action->getData());
     }
 
     public function testMagicalGetterReturnsDataProperties()
     {
-        $action = new Action('SOME_ACTION_NAME', ['someActionProperty' => 'someActionValue']);
+        $action = new Action(['someActionProperty' => 'someActionValue']);
 
         $this->assertEquals('someActionValue', $action->getSomeActionProperty());
     }
 
     public function testMagicalGetterReturnsNullForUndefinedProperties()
     {
-        $action = new Action('SOME_ACTION_NAME', ['someActionProperty' => 'someActionValue']);
+        $action = new Action(['someActionProperty' => 'someActionValue']);
 
         $this->assertNull($action->getSomeUndefinedActionProperty());
     }

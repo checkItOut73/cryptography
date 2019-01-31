@@ -32,12 +32,21 @@ trait SpyTrait
     /**
      * @param string $methodName
      * @param array $parameters
+     * @param bool $strictParameterEquality
      * @return bool
      */
-    public function hasMethodBeenCalledWith(string $methodName, array $parameters): bool
-    {
+    public function hasMethodBeenCalledWith(
+        string $methodName,
+        array $parameters,
+        bool $strictParameterEquality = true
+    ): bool {
         foreach ($this->calls as [$callMethodName, $callParameters]) {
-            if ($callMethodName === $methodName && $callParameters === $parameters) {
+            if (
+                $callMethodName === $methodName &&
+                $strictParameterEquality ?
+                    $callParameters === $parameters :
+                    $callParameters == $parameters
+            ) {
                 return true;
             }
         }

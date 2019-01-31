@@ -28,64 +28,59 @@ class SpyTraitTest extends TestCase
 
     public function testHasMethodBeenCalledWithReturnsTrueIfTheMethodHasBeenCalledWithTheGivenParameters()
     {
-        $this->testSpy->doSomethingSpecific(
-            'someParameter',
-            12345,
-            ['ABC']
-        );
+        $this->testSpy->doSomethingSpecific(['ABC']);
 
-        $this->assertTrue(
-            $this->testSpy->hasMethodBeenCalledWith(
-                'doSomethingSpecific',
-                [
-                    'someParameter',
-                    12345,
-                    ['ABC']
-                ]
-            )
-        );
+        $this->assertTrue($this->testSpy->hasMethodBeenCalledWith('doSomethingSpecific', [['ABC']]));
     }
 
-    public function testHasMethodBeenCalledWithReturnsFalseIfTheMethodHasBeenCalledWithOtherParameters()
+    public function testHasMethodBeenCalledWithReturnsFalseIfTheMethodHasBeenCalledWithOtherButEqualObjects()
     {
-        $this->testSpy->doSomethingSpecific(
-            'someParameter',
-            12345,
-            ['ABC']
-        );
+        $testObject = new TestClass(['ABC']);
+        $equalTestObject = new TestClass(['ABC']);
 
-        $this->assertFalse(
-            $this->testSpy->hasMethodBeenCalledWith(
-                'doSomethingSpecific',
-                [
-                    'someParameter',
-                    12345,
-                    ['ABCX']
-                ]
-            )
-        );
+        $this->testSpy->doSomethingSpecific(['testObject' => $testObject]);
+
+        $this->assertFalse($this->testSpy->hasMethodBeenCalledWith(
+            'doSomethingSpecific',
+            [['testObject' => $equalTestObject]]
+        ));
+    }
+
+    public function testHasMethodBeenCalledWithReturnsTrueIfCalledWithOtherEqualObjectsWithoutStrictParameterEquality()
+    {
+        $testObject = new TestClass(['ABC']);
+        $equalTestObject = new TestClass(['ABC']);
+
+        $this->testSpy->doSomethingSpecific(['testObject' => $testObject]);
+
+        $this->assertTrue($this->testSpy->hasMethodBeenCalledWith(
+            'doSomethingSpecific',
+            [['testObject' => $equalTestObject]],
+            false
+        ));
+    }
+
+    public function testHasMethodBeenCalledWithReturnsFalseIfCalledWithDifferingObjectsWithoutStrictParameterEquality()
+    {
+        $testObject = new TestClass(['ABC']);
+        $differingTestObject = new TestClass(['XYZ']);
+
+        $this->testSpy->doSomethingSpecific(['testObject' => $testObject]);
+
+        $this->assertFalse($this->testSpy->hasMethodBeenCalledWith(
+            'doSomethingSpecific',
+            ['testObject' => $differingTestObject],
+            false
+        ));
     }
 
     public function testResetClearsTheCallHistory()
     {
-        $this->testSpy->doSomethingSpecific(
-            'someParameter',
-            12345,
-            ['ABC']
-        );
+        $this->testSpy->doSomethingSpecific(['ABC']);
 
         $this->testSpy->reset();
 
         $this->assertFalse($this->testSpy->hasMethodBeenCalled('doSomethingSpecific'));
-        $this->assertFalse(
-            $this->testSpy->hasMethodBeenCalledWith(
-                'doSomethingSpecific',
-                [
-                    'someParameter',
-                    12345,
-                    ['ABC']
-                ]
-            )
-        );
+        $this->assertFalse($this->testSpy->hasMethodBeenCalledWith('doSomethingSpecific', [['ABC']]));
     }
 }

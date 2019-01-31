@@ -46,12 +46,11 @@
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification" />
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment" />
     </rule>
-    <rule ref="Squiz.Commenting.FunctionComment.MissingParamName">
-        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.WriteOnlyProperty">
+        <exclude-pattern>tests/TestHelpers/TestClass</exclude-pattern>
     </rule>
-    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
-        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
-        <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
+    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEqualOperators.DisallowedEqualOperator">
+        <exclude-pattern>tests/TestHelpers/SpyTrait</exclude-pattern>
     </rule>
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
         <exclude-pattern>src/Observation/Action</exclude-pattern>
@@ -59,7 +58,7 @@
         <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
         <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
     </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint">
-        <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
+        <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>
     </rule>
 </ruleset>

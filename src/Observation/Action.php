@@ -4,30 +4,17 @@ namespace Observation;
 
 class Action
 {
-    /** @var string $name */
-    private $name = '';
-
     /** @var mixed[] $data */
     private $data = [];
 
     /**
-     * @param string $name
      * @param mixed[] $data
      */
-    public function __construct(string $name, array $data = [])
+    public function __construct(array $data = [])
     {
-        $this->name = $name;
         $this->data = $data;
     }
-    
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-    
+
     /**
      * @return mixed[]
      */
