@@ -68,9 +68,9 @@ class StringReaderTest extends TestCase
     }
 
     /**
-     * @expectedException \Tools\Exceptions\InvalidCharacterParameterException
      * @dataProvider invalidCharacterDataProvider
      * @param string $invalidCharacter
+     * @expectedException \Tools\Exceptions\InvalidCharacterParameterException
      * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
      * @throws OperationOnEmptyStringException

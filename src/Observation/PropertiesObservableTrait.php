@@ -24,6 +24,24 @@ trait PropertiesObservableTrait
 
     /**
      * @param string $propertyName
+     * @return bool
+     */
+    public function __isset(string $propertyName): bool
+    {
+        return $this->isObservedProperty($propertyName);
+    }
+
+    /**
+     * @param string $propertyName
+     * @return bool
+     */
+    private function isObservedProperty(string $propertyName): bool
+    {
+        return in_array($propertyName, $this->getObservedPropertyNames());
+    }
+
+    /**
+     * @param string $propertyName
      * @return mixed
      */
     public function __get(string $propertyName)
@@ -41,24 +59,21 @@ trait PropertiesObservableTrait
 
     /**
      * @param string $propertyName
-     * @return bool
-     */
-    private function isObservedProperty(string $propertyName): bool
-    {
-        return in_array($propertyName, $this->getObservedPropertyNames());
-    }
-
-    /**
-     * @param string $propertyName
      * @param mixed $propertyValue
      */
     public function __set(string $propertyName, $propertyValue)
     {
         if ($this->isObservedProperty($propertyName)) {
-            $this->notifyObservers(new PropertyChangedAction([$propertyName => $propertyValue]));
             $this->observedProperties[$propertyName] = $propertyValue;
+            $this->notifyObservers($this->getPropertyChangedAction($propertyName));
         } elseif (property_exists($this, $propertyName)) {
             $this->$propertyName = $propertyValue;
         }
     }
+
+    /**
+     * @param string $propertyName
+     * @return Action
+     */
+    protected abstract function getPropertyChangedAction(string $propertyName): Action;
 }

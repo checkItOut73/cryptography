@@ -27,6 +27,21 @@ class PropertiesObservableTraitTest extends TestCase
         $this->assertEquals('some name', $this->testPropertiesObservable->getName());
     }
 
+    public function testIssetReturnsTrueForObservedProperties()
+    {
+        $this->assertTrue($this->testPropertiesObservable->isPropertySet('name'));
+    }
+
+    public function testIssetReturnsTrueForOtherNonObservedProperties()
+    {
+        $this->assertTrue($this->testPropertiesObservable->isPropertySet('nonObservedProperty'));
+    }
+
+    public function testIssetReturnsFalseForUndefinedProperties()
+    {
+        $this->assertFalse($this->testPropertiesObservable->isPropertySet('undefinedProperty'));
+    }
+
     public function testTheSubscribedObservesWillBeNotifiedIfAnObservedPropertyChanges()
     {
         $action = new PropertyChangedAction(['name' => 'new name']);

@@ -8,7 +8,7 @@ use Tools\Exceptions\OperationOnEmptyStringException;
 class StringReader extends StringCharacterPointer
 {
     /** @var string $readString */
-    private $readString = '';
+    protected $readString = '';
 
     /**
      * @param string $character

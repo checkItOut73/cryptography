@@ -9,12 +9,32 @@ class TestPropertiesObservable
     /** @var string $name */
     private $name;
 
+    /** @return string $nonObservedProperty */
+    private $nonObservedProperty = '';
+
     /**
      * @return string[]
      */
     protected function getObservedPropertyNames(): array
     {
         return ['name'];
+    }
+    /**
+     * @param string $propertyName
+     * @return Action
+     */
+    protected function getPropertyChangedAction(string $propertyName): Action
+    {
+        return new PropertyChangedAction([$propertyName => $this->$propertyName]);
+    }
+
+    /**
+     * @param string $propertyName
+     * @return bool
+     */
+    public function isPropertySet(string $propertyName): bool
+    {
+        return isset($this->$propertyName);
     }
 
     /**

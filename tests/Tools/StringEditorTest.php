@@ -46,12 +46,12 @@ class StringEditorTest extends TestCase
     }
 
     /**
+     * @dataProvider invalidCharacterDataProvider
+     * @param string $invalidCharacter
      * @expectedException \Tools\Exceptions\InvalidCharacterParameterException
      * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
      * @throws OperationOnEmptyStringException
-     * @dataProvider invalidCharacterDataProvider
-     * @param string $invalidCharacter
      */
     public function testSetPointedCharacterThrowsIfTheGivenCharacterIsInvalid(string $invalidCharacter)
     {
