@@ -75,5 +75,5 @@ trait PropertiesObservableTrait
      * @param string $propertyName
      * @return Action
      */
-    protected abstract function getPropertyChangedAction(string $propertyName): Action;
+    abstract protected function getPropertyChangedAction(string $propertyName): Action;
 }

@@ -9,7 +9,7 @@ class TestPropertiesObservable
     /** @var string $name */
     private $name;
 
-    /** @return string $nonObservedProperty */
+    /** @var string $nonObservedProperty */
     private $nonObservedProperty = '';
 
     /**
