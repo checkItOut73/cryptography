@@ -45,6 +45,7 @@ class SpyTraitTest extends TestCase
         $testObject = new TestClass(['ABC']);
         $equalTestObject = new TestClass(['ABC']);
 
+        $this->testSpy->doSomethingElse(['testObject' => $equalTestObject]);
         $this->testSpy->doSomethingSpecific(['testObject' => $testObject]);
 
         $this->assertFalse($this->testSpy->hasMethodBeenCalledWith(
@@ -72,11 +73,12 @@ class SpyTraitTest extends TestCase
         $testObject = new TestClass(['ABC']);
         $differingTestObject = new TestClass(['XYZ']);
 
+        $this->testSpy->doSomethingElse(['testObject' => $differingTestObject]);
         $this->testSpy->doSomethingSpecific(['testObject' => $testObject]);
 
         $this->assertFalse($this->testSpy->hasMethodBeenCalledWith(
             'doSomethingSpecific',
-            ['testObject' => $differingTestObject],
+            [['testObject' => $differingTestObject]],
             false
         ));
     }

@@ -26,4 +26,12 @@ class TestSpy
     {
         $this->recordCall();
     }
+
+    /**
+     * @param array $options
+     */
+    public function doSomethingElse(array $options)
+    {
+        $this->recordCall();
+    }
 }
