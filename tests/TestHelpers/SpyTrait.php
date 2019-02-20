@@ -43,9 +43,7 @@ trait SpyTrait
         foreach ($this->calls as [$callMethodName, $callParameters]) {
             if (
                 $callMethodName === $methodName &&
-                $strictParameterEquality ?
-                    $callParameters === $parameters :
-                    $callParameters == $parameters
+                ($strictParameterEquality ? $callParameters === $parameters : $callParameters == $parameters)
             ) {
                 return true;
             }

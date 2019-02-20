@@ -33,6 +33,13 @@ class SpyTraitTest extends TestCase
         $this->assertTrue($this->testSpy->hasMethodBeenCalledWith('doSomethingSpecific', [['ABC']]));
     }
 
+    public function testHasMethodBeenCalledWithReturnsFalseIfAnotherMethodHasBeenCalledWithTheGivenParameters()
+    {
+        $this->testSpy->doSomethingSpecific(['ABC']);
+
+        $this->assertFalse($this->testSpy->hasMethodBeenCalledWith('thatHasNotBeenDone', [['ABC']]));
+    }
+
     public function testHasMethodBeenCalledWithReturnsFalseIfTheMethodHasBeenCalledWithOtherButEqualObjects()
     {
         $testObject = new TestClass(['ABC']);
