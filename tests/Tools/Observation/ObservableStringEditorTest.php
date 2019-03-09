@@ -28,17 +28,6 @@ class ObservableStringEditorTest extends TestCase
      * @throws EmptyStringParameterException
      * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function testStringPropertyIsSetCorrectly()
-    {
-        $this->observableStringEditor->setString('ABC');
-
-        $this->assertEquals('ABC', $this->observableStringEditor->getString());
-    }
-
-    /**
-     * @throws EmptyStringParameterException
-     * @throws StringCharacterIndexOutOfBoundsException
-     */
     public function testObserversAreNotifiedWhenTheStringPropertyChanges()
     {
         $this->observableStringEditor->setString('ABC');
@@ -57,18 +46,6 @@ class ObservableStringEditorTest extends TestCase
      * @throws OperationOnEmptyStringException
      * @throws StringCharacterIndexOutOfBoundsException
      */
-    public function testPointedCharacterIndexPropertyIsSetCorrectly()
-    {
-        $this->observableStringEditor->setString('ABC', 2);
-
-        $this->assertEquals(2, $this->observableStringEditor->getPointedCharacterIndex());
-    }
-
-    /**
-     * @throws EmptyStringParameterException
-     * @throws OperationOnEmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
-     */
     public function testObserversAreNotifiedWhenThePointedCharacterIndexPropertyChanges()
     {
         $this->observableStringEditor->setString('ABC');
@@ -78,7 +55,7 @@ class ObservableStringEditorTest extends TestCase
             $this->testObserverSpy->hasMethodBeenCalledWith(
                 'handleAction',
                 [
-                    new PointedCharacterChangedAction([
+                    new PointerMovedAction([
                         'pointedCharacterIndex' => 1,
                         'pointedCharacter' => 'B'
                     ])
@@ -86,19 +63,6 @@ class ObservableStringEditorTest extends TestCase
                 false
             )
         );
-    }
-
-    /**
-     * @throws EmptyStringParameterException
-     * @throws OperationOnEmptyStringException
-     * @throws StringCharacterIndexOutOfBoundsException
-     */
-    public function testReadStringIsSetCorrectly()
-    {
-        $this->observableStringEditor->setString('ABC');
-        $this->observableStringEditor->readPointedCharacter();
-
-        $this->assertEquals('A', $this->observableStringEditor->getReadString());
     }
 
     /**

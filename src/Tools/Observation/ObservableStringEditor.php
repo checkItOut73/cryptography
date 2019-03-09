@@ -30,7 +30,7 @@ class ObservableStringEditor extends StringEditor
             case 'string':
                 return new StringChangedAction(['string' => $this->string]);
             case 'pointedCharacterIndex':
-                return new PointedCharacterChangedAction([
+                return new PointerMovedAction([
                     'pointedCharacterIndex' => $this->pointedCharacterIndex,
                     'pointedCharacter' => $this->getPointedCharacter()
                 ]);

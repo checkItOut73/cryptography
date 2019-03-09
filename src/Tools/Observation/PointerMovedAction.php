@@ -4,6 +4,6 @@ namespace Tools\Observation;
 
 use Observation\Action;
 
-class PointedCharacterChangedAction extends Action
+class PointerMovedAction extends Action
 {
 }
