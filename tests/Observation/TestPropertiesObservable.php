@@ -10,7 +10,7 @@ class TestPropertiesObservable
     private $name;
 
     /** @var string $nonObservedProperty */
-    private $nonObservedProperty = '';
+    private $nonObservedProperty;
 
     /**
      * @return string[]
@@ -51,5 +51,13 @@ class TestPropertiesObservable
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $nonObservedProperty
+     */
+    public function setNonObservedProperty(string $nonObservedProperty)
+    {
+        $this->nonObservedProperty = $nonObservedProperty;
     }
 }

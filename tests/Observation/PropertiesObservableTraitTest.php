@@ -4,6 +4,9 @@ namespace Observation;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Observation\PropertiesObservableTrait
+ */
 class PropertiesObservableTraitTest extends TestCase
 {
     /** @var TestPropertiesObservable $testPropertiesObservable */
@@ -27,14 +30,28 @@ class PropertiesObservableTraitTest extends TestCase
         $this->assertEquals('some name', $this->testPropertiesObservable->getName());
     }
 
-    public function testIssetReturnsTrueForObservedProperties()
+    public function testIssetReturnsTrueForObservedPropertiesThatAreSet()
     {
+        $this->testPropertiesObservable->setName('some name');
+
         $this->assertTrue($this->testPropertiesObservable->isPropertySet('name'));
     }
 
-    public function testIssetReturnsTrueForOtherNonObservedProperties()
+    public function testIssetReturnsFalseForObservedPropertiesThatAreNotSet()
     {
+        $this->assertFalse($this->testPropertiesObservable->isPropertySet('name'));
+    }
+
+    public function testIssetReturnsTrueForOtherNonObservedPropertiesThatAreSet()
+    {
+        $this->testPropertiesObservable->setNonObservedProperty('some value');
+
         $this->assertTrue($this->testPropertiesObservable->isPropertySet('nonObservedProperty'));
+    }
+
+    public function testIssetReturnsFalseForOtherNonObservedPropertiesThatAreNotSet()
+    {
+        $this->assertFalse($this->testPropertiesObservable->isPropertySet('nonObservedProperty'));
     }
 
     public function testIssetReturnsFalseForUndefinedProperties()

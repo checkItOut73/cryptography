@@ -28,7 +28,7 @@ trait PropertiesObservableTrait
      */
     public function __isset(string $propertyName): bool
     {
-        return $this->isObservedProperty($propertyName);
+        return $this->isObservedProperty($propertyName) ? isset($this->observedProperties[$propertyName]) : false;
     }
 
     /**
