@@ -5,6 +5,11 @@
     <rule ref="PSR2">
         <exclude name="Generic.Files.LineEndings" />
     </rule>
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array" value="count=>sizeof,delete=>unset,print=>echo"/>
+        </properties>
+    </rule>
     <rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml">
         <exclude name="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses.IncorrectlyOrderedUses" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedExtends" />
@@ -33,18 +38,23 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison.DisallowedYodaComparison" />
         <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed" />
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses.UselessParentheses" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator.MultiLineTernaryOperatorNotUsed" />
         <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName" />
         <exclude name="SlevomatCodingStandard.Functions.StaticClosure.ClosureNotStatic" />
         <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces.NonFullyQualified" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedImplements" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameAfterKeyword.NonFullyQualifiedUse" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants.NonFullyQualified" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified" />
         <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostDecrementOperator" />
         <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators.DisallowedPostIncrementOperator" />
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification" />
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification" />
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment" />
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaMagicConstant">
+        <exclude-pattern>src/Observation/Action</exclude-pattern>
     </rule>
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
         <exclude-pattern>tests/Observation/TestPropertiesObservable</exclude-pattern>
@@ -55,8 +65,12 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEqualOperators.DisallowedEqualOperator">
         <exclude-pattern>tests/TestHelpers/SpyTrait</exclude-pattern>
     </rule>
+    <rule ref="SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses.UsedWithParentheses">
+        <exclude-pattern>tests/TestHelpers/SpyTrait</exclude-pattern>
+    </rule>
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
         <exclude-pattern>src/Observation/Action</exclude-pattern>
+        <exclude-pattern>tests/Observation/ActionTest</exclude-pattern>
         <exclude-pattern>tests/Observation/TestObserverSpy</exclude-pattern>
         <exclude-pattern>tests/TestHelpers/TestSpy</exclude-pattern>
         <exclude-pattern>tests/Tools/Mocks/StringBufferSpy</exclude-pattern>

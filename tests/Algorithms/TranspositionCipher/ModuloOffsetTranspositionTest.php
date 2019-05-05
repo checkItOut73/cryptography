@@ -5,6 +5,9 @@ namespace Algorithms\TranspositionCipher;
 use PHPUnit\Framework\TestCase;
 use Tools\StringEditor;
 
+/**
+ * @covers \Algorithms\TranspositionCipher\ModuloOffsetTransposition
+ */
 class ModuloOffsetTranspositionTest extends TestCase
 {
     /** @var ModuloOffsetTransposition $moduloOffsetTransposition */

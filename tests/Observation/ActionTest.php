@@ -2,10 +2,26 @@
 
 namespace Observation;
 
+use Observation\Exceptions\TriggeredErrorException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Observation\Action
+ */
 class ActionTest extends TestCase
 {
+    public function setUp()
+    {
+        set_error_handler(function ($errorNumber, $errorString) {
+            throw new TriggeredErrorException($errorString);
+        }, E_USER_ERROR);
+    }
+
+    public function tearDown()
+    {
+        restore_error_handler();
+    }
+
     public function testAnEmptyArrayIsSetForDataAsDefault()
     {
         $action = new Action();
@@ -32,5 +48,16 @@ class ActionTest extends TestCase
         $action = new Action(['someActionProperty' => 'someActionValue']);
 
         $this->assertNull($action->getSomeUndefinedActionProperty());
+    }
+
+    /**
+     * @expectedException \Observation\Exceptions\TriggeredErrorException
+     * @expectedExceptionMessage Call to undefined method Observation\Action::someUndefinedMethod()
+     */
+    public function testMagicalGetterTriggersDefaultUndefinedMethodErrorForMethodThatDoesNotStartWithGet()
+    {
+        $action = new Action([]);
+
+        $action->someUndefinedMethod();
     }
 }

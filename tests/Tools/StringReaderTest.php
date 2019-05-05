@@ -8,6 +8,9 @@ use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
 use Tools\Exceptions\InvalidCharacterParameterException;
 use Tools\Exceptions\OperationOnEmptyStringException;
 
+/**
+ * @covers \Tools\StringReader
+ */
 class StringReaderTest extends TestCase
 {
     /** @var StringReader $stringReader */

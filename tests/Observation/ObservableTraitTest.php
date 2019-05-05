@@ -4,6 +4,9 @@ namespace Observation;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Observation\ObservableTrait
+ */
 class ObservableTraitTest extends TestCase
 {
     /** @var TestObservable $testObservable */
@@ -32,7 +35,7 @@ class ObservableTraitTest extends TestCase
 
         $this->testObservable->notifyObservers($action);
 
-        $this->assertTrue($this->testObserverSpy1->hasMethodBeenCalledWith('handleAction', [$action]));
-        $this->assertTrue($this->testObserverSpy2->hasMethodBeenCalledWith('handleAction', [$action]));
+        $this->testObserverSpy1->assertMethodHasBeenCalledWith('handleAction', [$action]);
+        $this->testObserverSpy2->assertMethodHasBeenCalledWith('handleAction', [$action]);
     }
 }

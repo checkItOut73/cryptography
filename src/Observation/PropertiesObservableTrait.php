@@ -20,7 +20,15 @@ trait PropertiesObservableTrait
     /**
      * @return string[]
      */
-    abstract protected function getObservedPropertyNames(): array;
+    private function getObservedPropertyNames(): array
+    {
+        return array_keys($this->getObservedPropertiesChangeActionCreators());
+    }
+
+    /**
+     * @return array
+     */
+    abstract protected function getObservedPropertiesChangeActionCreators(): array;
 
     /**
      * @param string $propertyName
@@ -50,8 +58,6 @@ trait PropertiesObservableTrait
 
         if ($this->isObservedProperty($propertyName)) {
             $propertyValue = $this->observedProperties[$propertyName];
-        } elseif (property_exists($this, $propertyName)) {
-            $propertyValue = $this->$propertyName;
         }
 
         return $propertyValue;
@@ -65,15 +71,9 @@ trait PropertiesObservableTrait
     {
         if ($this->isObservedProperty($propertyName)) {
             $this->observedProperties[$propertyName] = $propertyValue;
-            $this->notifyObservers($this->getPropertyChangedAction($propertyName));
-        } elseif (property_exists($this, $propertyName)) {
-            $this->$propertyName = $propertyValue;
+
+            $actionCreators = $this->getObservedPropertiesChangeActionCreators();
+            $this->notifyObservers($actionCreators[$propertyName]($propertyName));
         }
     }
-
-    /**
-     * @param string $propertyName
-     * @return Action
-     */
-    abstract protected function getPropertyChangedAction(string $propertyName): Action;
 }

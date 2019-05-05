@@ -34,6 +34,16 @@ class Action
             $propertyName = lcfirst(substr($methodName, 3));
 
             return $this->data[$propertyName];
+        } else {
+            $this->triggerDefaultUndefinedMethodError($methodName);
         }
-    }
+    } // @codeCoverageIgnore
+
+    /**
+     * @param string $methodName
+     */
+    private function triggerDefaultUndefinedMethodError(string $methodName)
+    {
+        trigger_error('Call to undefined method ' . __CLASS__ . '::' . $methodName . '()', E_USER_ERROR);
+    } // @codeCoverageIgnore
 }

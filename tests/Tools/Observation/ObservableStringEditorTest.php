@@ -8,6 +8,9 @@ use Tools\Exceptions\EmptyStringParameterException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
 use Tools\Exceptions\OperationOnEmptyStringException;
 
+/**
+ * @covers \Tools\Observation\ObservableStringEditor
+ */
 class ObservableStringEditorTest extends TestCase
 {
     /** @var ObservableStringEditor $observableStringEditor */
@@ -32,12 +35,10 @@ class ObservableStringEditorTest extends TestCase
     {
         $this->observableStringEditor->setString('ABC');
 
-        $this->assertTrue(
-            $this->testObserverSpy->hasMethodBeenCalledWith(
-                'handleAction',
-                [new StringChangedAction(['string' => 'ABC'])],
-                false
-            )
+        $this->testObserverSpy->assertMethodHasBeenCalledWith(
+            'handleAction',
+            [new StringChangedAction(['string' => 'ABC'])],
+            false
         );
     }
 
@@ -51,17 +52,15 @@ class ObservableStringEditorTest extends TestCase
         $this->observableStringEditor->setString('ABC');
         $this->observableStringEditor->moveForwards();
 
-        $this->assertTrue(
-            $this->testObserverSpy->hasMethodBeenCalledWith(
-                'handleAction',
-                [
-                    new PointerMovedAction([
-                        'pointedCharacterIndex' => 1,
-                        'pointedCharacter' => 'B'
-                    ])
-                ],
-                false
-            )
+        $this->testObserverSpy->assertMethodHasBeenCalledWith(
+            'handleAction',
+            [
+                new PointerMovedAction([
+                    'pointedCharacterIndex' => 1,
+                    'pointedCharacter' => 'B'
+                ])
+            ],
+            false
         );
     }
 
@@ -75,12 +74,10 @@ class ObservableStringEditorTest extends TestCase
         $this->observableStringEditor->setString('ABC');
         $this->observableStringEditor->readPointedCharacter();
 
-        $this->assertTrue(
-            $this->testObserverSpy->hasMethodBeenCalledWith(
-                'handleAction',
-                [new ReadStringChangedAction(['readString' => 'A'])],
-                false
-            )
+        $this->testObserverSpy->assertMethodHasBeenCalledWith(
+            'handleAction',
+            [new ReadStringChangedAction(['readString' => 'A'])],
+            false
         );
     }
 }

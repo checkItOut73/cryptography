@@ -13,19 +13,15 @@ class TestPropertiesObservable
     private $nonObservedProperty;
 
     /**
-     * @return string[]
+     * @return array
      */
-    protected function getObservedPropertyNames(): array
+    protected function getObservedPropertiesChangeActionCreators(): array
     {
-        return ['name'];
-    }
-    /**
-     * @param string $propertyName
-     * @return Action
-     */
-    protected function getPropertyChangedAction(string $propertyName): Action
-    {
-        return new PropertyChangedAction([$propertyName => $this->$propertyName]);
+        return [
+            'name' => function ($propertyName) {
+                return new PropertyChangedAction([$propertyName => $this->$propertyName]);
+            }
+        ];
     }
 
     /**
@@ -59,5 +55,13 @@ class TestPropertiesObservable
     public function setNonObservedProperty(string $nonObservedProperty)
     {
         $this->nonObservedProperty = $nonObservedProperty;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNonObservedProperty(): string
+    {
+        return $this->nonObservedProperty;
     }
 }

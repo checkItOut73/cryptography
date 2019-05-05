@@ -23,13 +23,6 @@ class PropertiesObservableTraitTest extends TestCase
         $this->testPropertiesObservable->addObserver($this->testObserverSpy);
     }
 
-    public function testObservedPropertiesAreChangedCorrectly()
-    {
-        $this->testPropertiesObservable->setName('some name');
-
-        $this->assertEquals('some name', $this->testPropertiesObservable->getName());
-    }
-
     public function testIssetReturnsTrueForObservedPropertiesThatAreSet()
     {
         $this->testPropertiesObservable->setName('some name');
@@ -59,12 +52,26 @@ class PropertiesObservableTraitTest extends TestCase
         $this->assertFalse($this->testPropertiesObservable->isPropertySet('undefinedProperty'));
     }
 
+    public function testObservedPropertiesAreChangedCorrectly()
+    {
+        $this->testPropertiesObservable->setName('some name');
+
+        $this->assertEquals('some name', $this->testPropertiesObservable->getName());
+    }
+
+    public function testNonObservedPropertiesAreChangedCorrectly()
+    {
+        $this->testPropertiesObservable->setNonObservedProperty('some value');
+
+        $this->assertEquals('some value', $this->testPropertiesObservable->getNonObservedProperty());
+    }
+
     public function testTheSubscribedObservesWillBeNotifiedIfAnObservedPropertyChanges()
     {
         $action = new PropertyChangedAction(['name' => 'new name']);
 
         $this->testPropertiesObservable->setName('new name');
 
-        $this->assertTrue($this->testObserverSpy->hasMethodBeenCalledWith('handleAction', [$action], false));
+        $this->testObserverSpy->assertMethodHasBeenCalledWith('handleAction', [$action], false);
     }
 }

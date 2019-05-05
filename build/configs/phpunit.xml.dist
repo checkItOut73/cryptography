@@ -1,7 +1,12 @@
-<phpunit bootstrap="../../vendor/autoload.php">
+<phpunit
+    bootstrap="../../vendor/autoload.php"
+    forceCoversAnnotation="true"
+>
     <filter>
         <whitelist>
             <directory>../../src</directory>
+            <file>../../tests/Observation/PropertyChangedAction.php</file>
+            <file>../../tests/TestHelpers/SpyTrait.php</file>
         </whitelist>
     </filter>
 </phpunit>

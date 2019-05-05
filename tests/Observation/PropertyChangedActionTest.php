@@ -4,6 +4,9 @@ namespace Observation;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Observation\PropertyChangedAction
+ */
 class PropertyChangedActionTest extends TestCase
 {
     /** @var PropertyChangedAction $propertyChangedAction */

@@ -2,10 +2,8 @@
 
 namespace Tools\Observation;
 
-use Observation\Action;
 use Observation\PropertiesObservableTrait;
 use Tools\StringEditor;
-use Tools\Exceptions\OperationOnEmptyStringException;
 
 class ObservableStringEditor extends StringEditor
 {
@@ -14,28 +12,21 @@ class ObservableStringEditor extends StringEditor
     /**
      * @return string[]
      */
-    protected function getObservedPropertyNames(): array
+    protected function getObservedPropertiesChangeActionCreators(): array
     {
-        return ['string', 'pointedCharacterIndex', 'readString'];
-    }
-
-    /**
-     * @param string $propertyName
-     * @return Action
-     * @throws OperationOnEmptyStringException
-     */
-    protected function getPropertyChangedAction(string $propertyName): Action
-    {
-        switch ($propertyName) {
-            case 'string':
+        return [
+            'string' => function () {
                 return new StringChangedAction(['string' => $this->string]);
-            case 'pointedCharacterIndex':
+            },
+            'pointedCharacterIndex' => function () {
                 return new PointerMovedAction([
                     'pointedCharacterIndex' => $this->pointedCharacterIndex,
                     'pointedCharacter' => $this->getPointedCharacter()
                 ]);
-            case 'readString':
+            },
+            'readString' => function () {
                 return new ReadStringChangedAction(['readString' => $this->readString]);
-        }
+            }
+        ];
     }
 }

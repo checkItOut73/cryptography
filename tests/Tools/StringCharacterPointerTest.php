@@ -9,6 +9,9 @@ use Tools\Exceptions\OperationOnEmptyStringException;
 use Tools\Exceptions\StringCharacterIndexOutOfBoundsException;
 use Tools\Exceptions\InvalidCharacterParameterException;
 
+/**
+ * @covers \Tools\StringCharacterPointer
+ */
 class StringCharacterPointerTest extends TestCase
 {
     /** @var StringCharacterPointer $stringCharacterPointer */
