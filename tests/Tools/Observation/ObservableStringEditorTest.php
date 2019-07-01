@@ -10,6 +10,11 @@ use Tools\Exceptions\OperationOnEmptyStringException;
 
 /**
  * @covers \Tools\Observation\ObservableStringEditor
+ * @uses \Tools\StringCharacterPointer
+ * @uses \Tools\StringReader
+ * @uses \Observation\Action
+ * @uses \Observation\ObservableTrait
+ * @uses \TestHelpers\SpyTrait
  */
 class ObservableStringEditorTest extends TestCase
 {

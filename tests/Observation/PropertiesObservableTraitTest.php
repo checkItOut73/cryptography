@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Observation\PropertiesObservableTrait
+ * @uses \Observation\Action
+ * @uses \TestHelpers\SpyTrait
  */
 class PropertiesObservableTraitTest extends TestCase
 {

@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Observation\PropertyChangedAction
+ * @uses \Observation\Action
  */
 class PropertyChangedActionTest extends TestCase
 {

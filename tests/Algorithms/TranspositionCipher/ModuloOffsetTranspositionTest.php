@@ -7,6 +7,10 @@ use Tools\StringEditor;
 
 /**
  * @covers \Algorithms\TranspositionCipher\ModuloOffsetTransposition
+ * @uses \Tools\StringCharacterPointer
+ * @uses \Tools\StringReader
+ * @uses \Tools\StringEditor
+ * @uses \Tools\Exceptions\StringCharacterNotContainedException
  */
 class ModuloOffsetTranspositionTest extends TestCase
 {

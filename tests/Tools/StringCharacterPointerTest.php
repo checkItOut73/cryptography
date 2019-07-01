@@ -11,6 +11,11 @@ use Tools\Exceptions\InvalidCharacterParameterException;
 
 /**
  * @covers \Tools\StringCharacterPointer
+ * @uses \Tools\Exceptions\EmptyStringParameterException
+ * @uses \Tools\Exceptions\StringCharacterNotContainedException
+ * @uses \Tools\Exceptions\InvalidCharacterParameterException
+ * @uses \Tools\Exceptions\OperationOnEmptyStringException
+ * @uses \Tools\Exceptions\StringCharacterIndexOutOfBoundsException
  */
 class StringCharacterPointerTest extends TestCase
 {

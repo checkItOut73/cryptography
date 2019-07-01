@@ -10,6 +10,9 @@ use Tools\Exceptions\OperationOnEmptyStringException;
 
 /**
  * @covers \Tools\StringReader
+ * @uses \Tools\Exceptions\InvalidCharacterParameterException
+ * @uses \Tools\Exceptions\OperationOnEmptyStringException
+ * @uses \Tools\StringCharacterPointer
  */
 class StringReaderTest extends TestCase
 {
